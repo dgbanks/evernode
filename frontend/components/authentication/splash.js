@@ -21,7 +21,7 @@ class Splash extends React.Component {
       from { background-color: white } 
       to { background-color: #70b2d8 }
     }`;
-    document.styleSheets[0].insertRule(keyframe)
+    document.styleSheets[0].insertRule(keyframe);
     setTimeout(() => new Auth().login(), 6000);
   }
   
