@@ -4477,7 +4477,7 @@ var Auth = function () {
       this.auth0.parseHash(function (err, authResult) {
         if (authResult && authResult.accessToken && authResult.idToken) {
           _this.setSession(authResult);
-          _history2.default.replace('/home');
+          _history2.default.replace('/dashboard');
         } else if (err) {
           _history2.default.replace('/home');
           console.log(err);
@@ -28538,6 +28538,14 @@ var _splash = __webpack_require__(138);
 
 var _splash2 = _interopRequireDefault(_splash);
 
+var _dashboard = __webpack_require__(177);
+
+var _dashboard2 = _interopRequireDefault(_dashboard);
+
+var _callback = __webpack_require__(178);
+
+var _callback2 = _interopRequireDefault(_callback);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
@@ -28550,7 +28558,9 @@ var App = function App() {
       _react2.default.createElement(
         _reactRouterDom.Switch,
         null,
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _splash2.default })
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _splash2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/dashboard', component: _dashboard2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/callback', component: _callback2.default })
       )
     )
   );
@@ -28595,15 +28605,18 @@ var Splash = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Splash.__proto__ || Object.getPrototypeOf(Splash)).call(this, props));
 
-    _this.divStyles = {
-      height: '100vh',
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      animationName: 'fadeInColor',
-      animationDuration: '5s',
-      animationDelay: '1.5s'
+    _this.state = {
+      auth0: new _auth2.default(),
+      divStyles: {
+        height: '100vh',
+        width: '100%',
+        backgroundColor: '#70b2d8',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        animationName: 'fadeInColor',
+        animationDuration: '7s'
+      }
     };
     return _this;
   }
@@ -28611,28 +28624,39 @@ var Splash = function (_React$Component) {
   _createClass(Splash, [{
     key: 'transitionColor',
     value: function transitionColor() {
+      var _this2 = this;
+
       var keyframe = '@keyframes fadeInColor { \n      from { background-color: white } \n      to { background-color: #70b2d8 }\n    }';
       document.styleSheets[0].insertRule(keyframe);
       setTimeout(function () {
-        return new _auth2.default().login();
-      }, 6000);
+        return _this2.state.auth0.login();
+      }, 15000);
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       {
         this.transitionColor();
       }
       return _react2.default.createElement(
         'div',
-        null,
+        { style: this.state.divStyles },
         _react2.default.createElement(
           'div',
-          { style: this.divStyles },
+          { style: { display: 'flex', flexDirection: 'column', alignItems: 'center' } },
           _react2.default.createElement(
             'h1',
             { className: 'splashText' },
             'Welcome to EVERNODE'
+          ),
+          _react2.default.createElement(
+            'a',
+            { className: 'splashButton', onClick: function onClick() {
+                return _this3.state.auth0.login();
+              } },
+            'Sign in with Google'
           )
         )
       );
@@ -35509,6 +35533,104 @@ var Auth0Config = exports.Auth0Config = {
   responseType: 'token id_token',
   scope: 'openid'
 };
+
+/***/ }),
+/* 177 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Dashboard = function (_React$Component) {
+  _inherits(Dashboard, _React$Component);
+
+  function Dashboard() {
+    _classCallCheck(this, Dashboard);
+
+    return _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).apply(this, arguments));
+  }
+
+  _createClass(Dashboard, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        'You are logged in'
+      );
+    }
+  }]);
+
+  return Dashboard;
+}(_react2.default.Component);
+
+/***/ }),
+/* 178 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Callback = function (_React$Component) {
+  _inherits(Callback, _React$Component);
+
+  function Callback() {
+    _classCallCheck(this, Callback);
+
+    return _possibleConstructorReturn(this, (Callback.__proto__ || Object.getPrototypeOf(Callback)).apply(this, arguments));
+  }
+
+  _createClass(Callback, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { style: { display: 'flex', justifyContent: 'center', alignItems: 'center' } },
+        _react2.default.createElement(
+          'h1',
+          null,
+          'Loading...'
+        )
+      );
+    }
+  }]);
+
+  return Callback;
+}(_react2.default.Component);
+
+exports.default = Callback;
 
 /***/ })
 /******/ ]);
