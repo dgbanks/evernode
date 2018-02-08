@@ -1,0 +1,19 @@
+// Place all the styles related to the api/users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.navbar {
+  height: 75px;
+  background-color: #70b2d8;
+  color: white;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 50px;
+  padding: 0px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fas .fa-user {
+  color: white;
+}

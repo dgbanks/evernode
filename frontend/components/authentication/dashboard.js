@@ -3,11 +3,17 @@ import { connect } from 'react-redux';
 import { logout } from '../../actions/user_actions';
 
 class Dashboard extends React.Component {
+
+
   render() {
     console.log('props', this.props);
     return (
       <div>
-        You are logged in, {this.props.currentUser.first_name}
+        <nav className='navbar'>
+          <h1>evernode</h1>
+          {this.props.currentUser.first_name}
+          <i className="fas fa-user"></i>
+        </nav>
         <a onClick={() => this.props.logout()}>Logout</a>
       </div>
     );

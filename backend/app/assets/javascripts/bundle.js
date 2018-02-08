@@ -7934,8 +7934,17 @@ var Dashboard = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        'You are logged in, ',
-        this.props.currentUser.first_name,
+        _react2.default.createElement(
+          'nav',
+          { className: 'navbar' },
+          _react2.default.createElement(
+            'h1',
+            null,
+            'evernode'
+          ),
+          this.props.currentUser.first_name,
+          _react2.default.createElement('i', { className: 'fas fa-user' })
+        ),
         _react2.default.createElement(
           'a',
           { onClick: function onClick() {

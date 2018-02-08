@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   helper_method :logged_in?, :current_user
 
   def current_user
-    debugger
     @current_user ||= User.find_by_session_token(session[:session_token])
   end
 
