@@ -5,10 +5,12 @@ import { authenticateUser } from '../../actions/user_actions';
 class Callback extends React.Component {
 
   componentWillMount() {
+    console.log('componentWillMount: localStorage', localStorage);
     if (localStorage.access_token) {
       let accessToken = localStorage.getItem('access_token');
       this.props.auth.auth0.client.userInfo(accessToken, (err, profile) => {
         if (profile) {
+          console.log('profile', profile);
           this.props.authenticateUser({
             google_id: profile.sub.slice(14),
             first_name: profile.given_name

@@ -15,16 +15,16 @@ const handleAuthentication = ({location}) => {
   }
 };
 
-export const makeMainRoutes = () => {
+export const AuthRoutes = () => {
   return (
     <Router history={history}>
         <div>
-          <AuthRoute path="/dashboard" component={Dashboard} />
           <Route exact path="/" render={(props) => <Splash auth={auth} {...props} /> } />
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
             return <Callback auth={auth} {...props} />;
           }}/>
+          <AuthRoute path="/dashboard" component={Dashboard} />
         </div>
       </Router>
   );
