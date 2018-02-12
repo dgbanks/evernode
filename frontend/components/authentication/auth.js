@@ -34,9 +34,8 @@ export default class Auth {
       console.log('authResult', authResult);
       console.log('err', err);
       if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult);
-        console.log(authResult);
-        // history.replace('/home');
+        localStorage.setItem('access_token', authResult.accessToken);
+        history.replace('/callback');
       } else if (err) {
         history.replace('/');
         console.log(err);

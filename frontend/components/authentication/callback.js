@@ -8,6 +8,7 @@ class Callback extends React.Component {
     console.log('componentWillMount: localStorage', localStorage);
     if (localStorage.access_token) {
       let accessToken = localStorage.getItem('access_token');
+      localStorage.removeItem('access_token');
       this.props.auth.auth0.client.userInfo(accessToken, (err, profile) => {
         if (profile) {
           console.log('profile', profile);

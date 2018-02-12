@@ -8,7 +8,7 @@ import Auth from './authentication/auth';
 import history from './authentication/history';
 import { Auth0Config } from './authentication/auth0_config';
 import { AuthRoutes } from './authentication/routes';
-import AuthRoute from '../utils/route_util';
+// import AuthRoute from '../utils/route_util';
 
 // const authRoutes = AuthRoutes();
 

@@ -29,14 +29,3 @@ export const AuthRoutes = () => {
       </Router>
   );
 };
-
-// <Route exact path="/" render={(props) => <App auth={auth} {...props} />} />
-// <Route path="/home" render={(props) => <Home auth={auth} {...props} />} />
-
-// <Route path="/profile" render={(props) => (
-//   !auth.isAuthenticated() ? (
-//     <Redirect to="/home"/>
-//   ) : (
-//     <Profile auth={auth} {...props} />
-//   )
-// )} />
