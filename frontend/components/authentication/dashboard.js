@@ -12,7 +12,6 @@ class Dashboard extends React.Component {
         <nav className='navbar'>
           <h1>evernode</h1>
           {this.props.currentUser.first_name}
-          <i className="fas fa-user"></i>
         </nav>
         <a onClick={() => this.props.logout()}>Logout</a>
       </div>
@@ -20,8 +19,8 @@ class Dashboard extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  currentUser: state.ui.session.currentUser
+const mapStateToProps = (state, ownProps) => ({
+  currentUser: ownProps.currentUser
 });
 
 const mapDispatchToProps = dispatch => ({

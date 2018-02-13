@@ -1,5 +1,4 @@
 import React from 'react';
-import history from './history';
 import { connect } from 'react-redux';
 
 class Splash extends React.Component {
@@ -11,13 +10,6 @@ class Splash extends React.Component {
     this.transitionColor = this.transitionColor.bind(this);
   }
 
-  componentWillMount() {
-    if (this.props.currentUser) {
-      console.log('CURRENT USER');
-      // history.replace('/dashboard');
-    }
-  }
-
   transitionColor() {
     let keyframe = `@keyframes fadeInColor {
       from { background-color: white }
@@ -27,7 +19,6 @@ class Splash extends React.Component {
   }
 
   handleLogin() {
-    // console.log('this.props.auth', this.props.auth);
     console.log(this.props);
     this.props.auth.login();
   }
@@ -46,25 +37,23 @@ class Splash extends React.Component {
       animationDuration: '4s'
     };
 
-    if (this.props.currentUser) {
-      return <h1>{this.props.currentUser.first_name}</h1>;
-    } else {
-      return (
-        <div style={divStyles}>
+    return (
+      <div style={divStyles}>
         <div style={{display:'flex', flexDirection:'column', alignItems: 'center'}}>
-        <h1 className='splashText'>Welcome to EVERNODE</h1>
-        <a className='splashButton' onClick={() => this.handleLogin()}>
-        Sign in with Google
-        </a>
+          <h1 className='splashText'>Welcome to EVERNODE</h1>
+          <a className='splashButton' onClick={() => this.handleLogin()}>
+            Sign in with Google
+          </a>
         </div>
-        </div>
-      );
-    }
+      </div>
+    );
+
   }
 }
 
-const mapStateToProps = state => ({
-  currentUser: state.ui.session.currentUser
-});
+const mapStateToProps = ownProps => {
+  console.log('newSplash mapStateToProps:', ownProps);
+  return {auth: ownProps.auth};
+};
 
 export default connect(mapStateToProps, null)(Splash);

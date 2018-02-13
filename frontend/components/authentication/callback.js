@@ -15,7 +15,7 @@ class Callback extends React.Component {
           this.props.authenticateUser({
             google_id: profile.sub.slice(14),
             first_name: profile.given_name
-          }).then(() => this.props.history.replace('/dashboard'));
+          }).then(() => this.props.history.replace('/'));
         }
       });
     }
@@ -39,7 +39,7 @@ class Callback extends React.Component {
 
     return (
       <div style={style}>
-        <h1>THIS WAS SUPPOSED TO BE THE LOADING SVG</h1>
+        <i class="fas fa-spinner fa-pulse"></i>
       </div>
     );
   }
