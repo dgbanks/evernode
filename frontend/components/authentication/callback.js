@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { authenticateUser } from '../../actions/user_actions';
+import { authenticateUser } from '../../actions/session_actions';
 
 class Callback extends React.Component {
 

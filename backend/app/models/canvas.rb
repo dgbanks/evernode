@@ -10,4 +10,10 @@ class Canvas < ApplicationRecord
     primary_key: :id,
     foreign_key: :canvas_id,
     class_name: :Node
+
+  after_initialize :create_title_node
+
+  def create_title_node
+    Node.create({title: self.title})
+  end
 end

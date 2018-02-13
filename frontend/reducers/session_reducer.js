@@ -1,4 +1,4 @@
-import { RECEIVE_USER, REMOVE_USER } from '../actions/user_actions';
+import { RECEIVE_USER, REMOVE_USER } from '../actions/session_actions';
 
 const nullUser = {
   currentUser: null
