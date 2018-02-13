@@ -8,7 +8,7 @@ class Callback extends React.Component {
     console.log('componentWillMount: localStorage', localStorage);
     if (localStorage.access_token) {
       let accessToken = localStorage.getItem('access_token');
-      localStorage.removeItem('access_token');
+      localStorage.clear();
       this.props.auth.auth0.client.userInfo(accessToken, (err, profile) => {
         if (profile) {
           console.log('profile', profile);
@@ -25,21 +25,19 @@ class Callback extends React.Component {
     console.log(this.props);
 
     const style = {
-      position: 'absolute',
       display: 'flex',
       justifyContent: 'center',
+      alignItems: 'center',
       height: '100vh',
       width: '100vw',
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
+      color: '#70b2d8',
       backgroundColor: 'white',
+      fontSize: '200px'
     };
 
     return (
       <div style={style}>
-        <i class="fas fa-spinner fa-pulse"></i>
+        <i className="fas fa-spinner fa-pulse"></i>
       </div>
     );
   }

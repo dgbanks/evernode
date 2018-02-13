@@ -8,12 +8,18 @@ class Dashboard extends React.Component {
   render() {
     console.log('props', this.props);
     return (
-      <div>
+      <div className='dash-main'>
         <nav className='navbar'>
           <h1>evernode</h1>
-          {this.props.currentUser.first_name}
+          <div>
+            <a onClick={() => this.props.logout()}>Settings</a>
+            <a onClick={() => this.props.logout()}>Logout</a>
+          </div>
         </nav>
-        <a onClick={() => this.props.logout()}>Logout</a>
+
+        <div className='dash-index'>
+          <h1>{this.props.currentUser.first_name} Canvases</h1>
+        </div>
       </div>
     );
   }

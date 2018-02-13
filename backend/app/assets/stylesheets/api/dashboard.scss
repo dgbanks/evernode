@@ -2,18 +2,47 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.dash-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .navbar {
-  height: 75px;
-  background-color: #70b2d8;
-  color: white;
+  height: 100px;
+  width: 70%;
+  border-bottom: 1px solid gray;
+  color: #70b2d8;
   font-family: "Trebuchet MS", sans-serif;
   font-size: 50px;
-  padding: 0px 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.fas .fa-user {
-  color: white;
+.navbar div {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.navbar a {
+  margin: 0px 10px;
+  color: gray;
+}
+
+.navbar a:hover {
+  color: #70b2d8;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.dash-index {
+  margin-top: 100px;
+  height: 100px;
+  width: 70%;
+  border: 1px solid black;
 }

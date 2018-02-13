@@ -2,15 +2,9 @@ import React from 'react';
 import { Route, Switch, Router } from 'react-router-dom';
 import auth0 from 'auth0-js';
 import Splash from './authentication/splash';
-import Dashboard from './authentication/dashboard';
 import Callback from './authentication/callback';
 import Auth from './authentication/auth';
 import history from './authentication/history';
-import { Auth0Config } from './authentication/auth0_config';
-import { AuthRoutes } from './authentication/routes';
-
-import Home from './authentication/homepage';
-import AuthRoute from '../utils/route_util';
 
 // const authRoutes = AuthRoutes();
 
@@ -29,7 +23,6 @@ const App = () => (
       handleAuthentication(props);
       return <Callback auth={auth} {...props} />;
     }}/>
-    <AuthRoute path='/dashboard' component={Dashboard} />
   </Switch>
 );
 

@@ -2,6 +2,8 @@ import React from 'react';
 import history from './history';
 import { connect } from 'react-redux';
 
+import Dashboard from './dashboard';
+
 class Splash extends React.Component {
   constructor(props) {
     super(props);
@@ -47,7 +49,9 @@ class Splash extends React.Component {
     };
 
     if (this.props.currentUser) {
-      return <h1>{this.props.currentUser.first_name}</h1>;
+      return (
+        <Dashboard currentUser={this.props.currentUser}/>
+      );
     } else {
       return (
         <div style={divStyles}>
