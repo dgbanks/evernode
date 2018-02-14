@@ -28,7 +28,13 @@ class CanvasIndex extends React.Component {
     } else {
       return (
         <div>
-          <h1>You have no canvases</h1>
+          <div className='index-header'>
+              <h1>You have no canvases</h1>
+              <button>New Canvas</button>
+          </div>
+          <div className='index'>
+            <h1>But this is where they would go</h1>
+          </div>
         </div>
       );
     }

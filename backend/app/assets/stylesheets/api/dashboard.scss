@@ -41,8 +41,39 @@
 }
 
 .dash-index {
-  margin-top: 100px;
-  height: 100px;
+  margin-top: 50px;
   width: 70%;
   border: 1px solid black;
+}
+
+.index-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  height: 100px;
+  width: 100%;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 50px;
+}
+
+.index-header button {
+  height: 40px;
+  width: 175px;
+  border: 0px;
+  font-size: 25px;
+  font-family: "Trebuchet MS", sans-serif;
+  color: white;
+  background-color: #70b2d8;
+}
+
+.index-header button:hover {
+  background-color: darken(#70b2d8, 10);
+  cursor: pointer;
+}
+
+.index {
+  border: 1px solid black;
+  height: 200px;
+  width: 100%;
 }
