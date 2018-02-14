@@ -1,5 +1,5 @@
 class Node < ApplicationRecord
-  validates :title, :canvas_id, presence :true
+  validates :title, :canvas_id, presence: true
 
   belongs_to :canvas,
     primary_key: :id,

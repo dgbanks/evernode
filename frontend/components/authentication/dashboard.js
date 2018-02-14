@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
+import CanvasIndex from '../canvas/canvas_index';
 import { logout } from '../../actions/session_actions';
 
 class Dashboard extends React.Component {
@@ -12,13 +14,14 @@ class Dashboard extends React.Component {
         <nav className='navbar'>
           <h1>evernode</h1>
           <div>
+            <p>(Logged in as {this.props.currentUser.first_name})</p>
             <a onClick={() => this.props.logout()}>Settings</a>
             <a onClick={() => this.props.logout()}>Logout</a>
           </div>
         </nav>
 
         <div className='dash-index'>
-          <h1>{this.props.currentUser.first_name} Canvases</h1>
+          <CanvasIndex currentUser={this.props.currentUser} />
         </div>
       </div>
     );

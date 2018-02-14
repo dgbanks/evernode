@@ -1,5 +1,5 @@
 class Canvas < ApplicationRecord
-  validates :title, :owner_id, presence :true
+  validates :title, :owner_id, presence: true
 
   belongs_to :owner,
     primary_key: :id,

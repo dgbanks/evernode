@@ -31,7 +31,7 @@ export const createCanvas = canvas => dispatch => (
     .catch(errors => dispatch(receiveCanvasErrors(errors)))
 );
 
-export const fetchAllCanvases = ownerId => dispatch => (
+export const fetchUserCanvases = ownerId => dispatch => (
   CanvasUtil.getCanvases(ownerId)
     .then(canvases => dispatch(receiveAllCanvases(canvases)))
     .catch(errors => dispatch(receiveCanvasErrors(errors)))
@@ -40,5 +40,17 @@ export const fetchAllCanvases = ownerId => dispatch => (
 export const fetchCanvas = canvasId => dispatch => (
   CanvasUtil.getCanvas(canvasId)
     .then(canvas => dispatch(receiveCanvas(canvas)))
+    .catch(errors => dispatch(receiveCanvasErrors(errors)))
+);
+
+export const editCanvas = canvas => dispatch => (
+  CanvasUtil.patchCanvas(canvas)
+    .then(editedCanvas => dispatch(receiveCanvas(editedCanvas)))
+    .catch(errors => dispatch(receiveCanvasErrors(errors)))
+);
+
+export const deleteCanvas = canvasId => dispatch => (
+  CanvasUtil.deleteCanvas(canvasId)
+    .then(canvas => dispatch(removeCanvas(canvas)))
     .catch(errors => dispatch(receiveCanvasErrors(errors)))
 );
