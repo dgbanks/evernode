@@ -1,7 +1,5 @@
 <script type="text/javascript">
-  console.log('WINDOWING CURRENT USER');
   <% if logged_in? %>
-    console.log('root.html.erb LOGGED_IN');
     window.currentUser = <%= render(
       "api/users/user.json.jbuilder",
       user: current_user

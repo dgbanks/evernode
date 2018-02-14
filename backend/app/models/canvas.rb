@@ -9,11 +9,12 @@ class Canvas < ApplicationRecord
   has_many :nodes,
     primary_key: :id,
     foreign_key: :canvas_id,
-    class_name: :Node
+    class_name: :Node,
+    dependent: :destroy
 
   after_initialize :create_title_node
 
   def create_title_node
-    Node.create({title: self.title})
+    Node.create({title: self.title, canvas_id: self.id})
   end
 end
