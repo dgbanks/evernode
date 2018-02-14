@@ -20,11 +20,18 @@ class Api::CanvasesController < ApplicationController
   end
 
   def update
-    
+    @canvas = current_user.canvases.find_by(id: params[:id])
+    if @canvas.update_attributes(canvas_params)
+      render :show
+    else
+      render json: @canvas.errors.full_messages, status: 422
+    end
   end
 
   def destroy
-
+    @canvas = current_user.canvases.find_by(id: params[:id])
+    @canvas.destroy
+    render :show
   end
 
   private

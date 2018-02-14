@@ -9,7 +9,8 @@ class Api::NodesController < ApplicationController
   end
 
   def show
-
+    @node = Node.where(id: params[:id])
+    render :show
   end
 
   def index
@@ -18,11 +19,18 @@ class Api::NodesController < ApplicationController
   end
 
   def update
-
+    @node = Node.where(id: params[:id])
+    if @node.update_attributes(node_params)
+      render :show
+    else
+      render json: @node.errors.full_messages, status: 422
+    end
   end
 
   def destroy
-
+    @node = Node.where(id: params[:id])
+    @node.destroy
+    render :show
   end
 
   private
