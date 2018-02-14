@@ -1,6 +1,11 @@
 class Api::NodesController < ApplicationController
   def create
-
+    @node = Node.new(node_params)
+    if @node.save
+      render :show
+    else
+      render json: @node.errors.full_messages, status: 422
+    end
   end
 
   def show
@@ -8,7 +13,8 @@ class Api::NodesController < ApplicationController
   end
 
   def index
-
+    @nodes = Node.where(canvas_id: params[:canvas_id])
+    render :index
   end
 
   def update

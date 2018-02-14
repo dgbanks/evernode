@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180204024600) do
+ActiveRecord::Schema.define(version: 20180213072902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "canvases", force: :cascade do |t|
+    t.string "title", null: false
+    t.integer "owner_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_canvases_on_owner_id"
+  end
+
+  create_table "nodes", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "body"
+    t.integer "canvas_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["canvas_id"], name: "index_nodes_on_canvas_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "google_id", null: false
