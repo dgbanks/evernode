@@ -3,6 +3,7 @@ class Api::CanvasesController < ApplicationController
     @canvas = Canvas.new(canvas_params)
     @canvas.owner_id = current_user.id
     if @canvas.save
+      Node.create({ title: @canvas.title, canvas_id: @canvas.id })
       render :show
     else
       render json: @canvas.errors.full_messages, status: 422
