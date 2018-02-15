@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import {
   createCanvas,
   fetchCanvas,
-  fetchUserCanvases,
-  editCanvas,
-  deleteCanvas
+  fetchUserCanvases
 } from '../../actions/canvas_actions';
+import IndexItem from './index_item';
 
 class CanvasIndex extends React.Component {
   constructor(props) {
@@ -19,7 +18,7 @@ class CanvasIndex extends React.Component {
     this.props.fetchUserCanvases(this.props.currentUser.id);
   }
 
-  handleForm(bool) {
+  handleForm() {
     const title = this.state.newTitle || 'New Canvas';
     this.props.createCanvas({ title: title })
       .then(() => this.setState({ showForm: false, newTitle: '' }));
@@ -56,14 +55,7 @@ class CanvasIndex extends React.Component {
         </div>
 
         <div className='index'>
-          {
-            numberOfCanvases ?
-            this.props.canvases.map(canvas => (
-              <div key={canvas.id}>
-                {canvas.title}
-              </div>
-            )) : <div></div>
-          }
+          {this.props.canvases.map(canvas => <IndexItem key={canvas.id} canvas={canvas} />)}
         </div>
       </div>
     );
@@ -78,9 +70,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   createCanvas: canvas => dispatch(createCanvas(canvas)),
   fetchCanvas: canvasId => dispatch(fetchCanvas(canvasId)),
-  fetchUserCanvases: ownerId => dispatch(fetchUserCanvases(ownerId)),
-  editCanvas: canvas => dispatch(editCanvas(canvas)),
-  deleteCanvas: canvasId => dispatch(deleteCanvas(canvasId))
+  fetchUserCanvases: ownerId => dispatch(fetchUserCanvases(ownerId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CanvasIndex);
