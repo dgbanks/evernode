@@ -13,7 +13,6 @@ class Callback extends React.Component {
     localStorage.clear();
     this.props.auth.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
-        console.log('profile', profile);
         this.props.authenticateUser({
           google_id: profile.sub.slice(14),
           first_name: profile.given_name
@@ -33,7 +32,6 @@ class Callback extends React.Component {
       backgroundColor: 'white',
       fontSize: '200px'
     };
-    console.log('render function of callback');
     return (
       <div style={style}>
         <i className="fas fa-spinner fa-pulse"></i>

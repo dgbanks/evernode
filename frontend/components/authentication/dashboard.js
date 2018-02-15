@@ -5,10 +5,7 @@ import CanvasIndex from '../canvas/canvas_index';
 import { logout } from '../../actions/session_actions';
 
 class Dashboard extends React.Component {
-
-
   render() {
-    console.log('props', this.props);
     return (
       <div className='dash-main'>
         <nav className='navbar'>

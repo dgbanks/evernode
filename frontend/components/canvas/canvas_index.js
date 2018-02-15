@@ -34,7 +34,6 @@ class CanvasIndex extends React.Component {
 
   render() {
     const numberOfCanvases = this.props.currentUser.canvases.length;
-    console.log(this.state);
     return (
       <div>
         <div className='index-header'>

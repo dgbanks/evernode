@@ -25,27 +25,21 @@ export default class Auth {
 
   login() {
     this.auth0.authorize();
-    console.log('authorize');
   }
 
   handleAuthentication() {
-    console.log('handleAuthentication');
     this.auth0.parseHash((err, authResult) => {
-      console.log('authResult', authResult);
-      console.log('err', err);
       if (authResult && authResult.accessToken && authResult.idToken) {
         localStorage.setItem('access_token', authResult.accessToken);
         history.replace('/callback');
       } else if (err) {
         history.replace('/');
-        console.log(err);
         alert(`Error: ${err.error}. Check the console for further details.`);
       }
     });
   }
 
   setSession(authResult) {
-    console.log('setSession');
     // Set the time that the access token will expire at
     let expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
