@@ -5,25 +5,24 @@ import { authenticateUser } from '../../actions/session_actions';
 class Callback extends React.Component {
 
   componentWillMount() {
-    console.log('componentWillMount: localStorage', localStorage);
-    if (localStorage.access_token) {
-      let accessToken = localStorage.getItem('access_token');
-      localStorage.clear();
-      this.props.auth.auth0.client.userInfo(accessToken, (err, profile) => {
-        if (profile) {
-          console.log('profile', profile);
-          this.props.authenticateUser({
-            google_id: profile.sub.slice(14),
-            first_name: profile.given_name
-          }).then(() => this.props.history.replace('/'));
-        }
-      });
-    }
+    setTimeout(this.handleLogin(), 5000);
+  }
+
+  handleLogin() {
+    let accessToken = localStorage.getItem('access_token');
+    localStorage.clear();
+    this.props.auth.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        console.log('profile', profile);
+        this.props.authenticateUser({
+          google_id: profile.sub.slice(14),
+          first_name: profile.given_name
+        }).then(() => this.props.history.replace('/'));
+      }
+    });
   }
 
   render() {
-    console.log(this.props);
-
     const style = {
       display: 'flex',
       justifyContent: 'center',
@@ -34,7 +33,7 @@ class Callback extends React.Component {
       backgroundColor: 'white',
       fontSize: '200px'
     };
-
+    console.log('render function of callback');
     return (
       <div style={style}>
         <i className="fas fa-spinner fa-pulse"></i>
