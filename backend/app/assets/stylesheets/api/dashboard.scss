@@ -43,16 +43,17 @@
 .dash-index {
   margin-top: 50px;
   width: 70%;
-  border: 1px solid black;
+  // border: 1px solid black;
 }
 
 .index-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
+  // border: 1px solid black;
+  padding: 0px 25px;
   height: 50px;
-  width: 100%;
+  // width: 100%;
   font-family: "Trebuchet MS", sans-serif;
   font-size: 30px;
 }
@@ -103,15 +104,53 @@
   // width: 100%;
   height: 35px;
   border: 1px solid black;
-  padding: 0px 10px;
+  background-color: white;
+  padding: 0px 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: "Trebuchet MS", sans-serif;
+  font-size: 20px;
 }
 
-.index-options {
-  border: 1px solid black;
+.index div:hover, button:hover {
+  cursor: pointer;
+}
+
+.index div:hover h1 {
+  color: #70b2d8;
+  text-decoration: underline;
+}
+
+.index-options-container {
+  // border: 1px solid black;
+  width: 35%;
+  height: 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
+}
+
+.index-options-container button, .index-options-container input {
+  width: 45%;
+  height: 75%;
+  font-size: 15px;
+  font-family: "Trebuchet MS", sans-serif;
+  background-color: lightgray;
+}
+
+.index-options-container input {
+  background-color: white;
+}
+
+.index-options-container button:first-child:hover {
+  background-color: #70b2d8;
+}
+
+.index-options-container button:last-child:hover {
+  background-color: #f44262;
+}
+
+.rename button:last-child:hover {
+  background-color: #70b2d8;
 }

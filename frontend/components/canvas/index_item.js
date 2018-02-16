@@ -5,38 +5,69 @@ import { editCanvas, deleteCanvas } from '../../actions/canvas_actions';
 class IndexItem extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = { displayOptions: false};
+    this.state = {
+      rename: false,
+      delete: false,
+      newTitle: props.canvas.title
+    };
   }
 
-  displayOptions() {
-    if (this.state.displayOptions) {
-      let keyframe = `@keyframes hideOptions {
-        from { width: 300px }
-        to { width: 100px }
-      }`;
-      document.styleSheets[0].insertRule(keyframe);
-    } else {
-      let keyframe = `@keyframes displayOptions {
-        from { width: 100px }
-        to { width: 300px }
-      }`;
-      document.styleSheets[0].insertRule(keyframe);
-    }
+  updateNewTitle() {
+    return e => {
+      e.preventDefault();
+      this.setState({ newTitle: e.target.value });
+    };
+  }
+
+  handleRename() {
+    this.props.editCanvas({
+      id: this.props.canvas.id,
+      title: this.state.newTitle
+    }).then(action => this.setState({
+      rename: false,
+      newTitle: action.canvas.data.title
+    }));
   }
 
   render() {
     const canvas = this.props.canvas;
-    const iconStyles = {
-      fontSize: '20px'
-    };
+    console.log(this.state);
+
     return (
       <div className='index-item'>
         <h1>{canvas.title}</h1>
-        <div className='index-options'>
-          <i style={iconStyles}className="fas fa-angle-left"></i>
-          Options
-        </div>
+        {
+          this.state.rename ?
+          <div className='index-options-container rename'>
+            <input value={this.state.newTitle} onChange={this.updateNewTitle()}/>
+            {
+              this.state.newTitle === canvas.title || this.state.newTitle === '' ?
+              <button onClick={() => this.setState({ rename: false, newTitle: canvas.title })}>
+                Cancel
+              </button> :
+              <button className='save' onClick={() => this.handleRename(canvas)}>
+                Save New Title
+              </button>
+            }
+          </div> :
+          this.state.delete ?
+          <div className='index-options-container'>
+            <button onClick={() => this.setState({delete: false})}>
+              Cancel
+            </button>
+            <button onClick={() => this.props.deleteCanvas(canvas.id)}>
+              Confirm Delete
+            </button>
+          </div> :
+          <div className='index-options-container'>
+            <button onClick={() => this.setState({rename: true})}>
+              Rename
+            </button>
+            <button onClick={() => this.setState({delete: true})}>
+              Delete
+            </button>
+          </div>
+        }
       </div>
     );
   }
