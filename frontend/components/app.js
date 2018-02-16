@@ -5,7 +5,7 @@ import Splash from './authentication/splash';
 import Callback from './authentication/callback';
 import Auth from './authentication/auth';
 import history from './authentication/history';
-
+import CanvasShow from './canvas/canvas_show';
 // const authRoutes = AuthRoutes();
 
 const auth = new Auth();
@@ -23,6 +23,7 @@ const App = () => (
       handleAuthentication(props);
       return <Callback auth={auth} {...props} />;
     }}/>
+    <Route path='/canvases/:canvasId' component={CanvasShow} />
   </Switch>
 );
 

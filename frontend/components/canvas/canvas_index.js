@@ -11,7 +11,7 @@ import IndexItem from './index_item';
 class CanvasIndex extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { showForm: false, newTitle: '' };
+    this.state = { showForm: false, newTitle: '', };
   }
 
   componentWillMount() {
@@ -32,7 +32,7 @@ class CanvasIndex extends React.Component {
   }
 
   render() {
-    const numberOfCanvases = this.props.currentUser.canvases.length;
+    const numberOfCanvases = this.props.canvases.length;
     return (
       <div>
         <div className='index-header'>

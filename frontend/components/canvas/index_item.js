@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import { editCanvas, deleteCanvas } from '../../actions/canvas_actions';
 
 class IndexItem extends React.Component {
@@ -35,17 +37,28 @@ class IndexItem extends React.Component {
 
     return (
       <div className='index-item'>
-        <h1>{canvas.title}</h1>
+        <Link
+          to={`/canvases/${canvas.id}`}
+          style={{textDecoration: 'none', color: 'black'}}>
+          <h1>{canvas.title}</h1>
+        </Link>
         {
           this.state.rename ?
           <div className='index-options-container rename'>
             <input value={this.state.newTitle} onChange={this.updateNewTitle()}/>
             {
-              this.state.newTitle === canvas.title || this.state.newTitle === '' ?
-              <button onClick={() => this.setState({ rename: false, newTitle: canvas.title })}>
-                Cancel
-              </button> :
-              <button className='save' onClick={() => this.handleRename(canvas)}>
+              this.state.newTitle === canvas.title ||
+              this.state.newTitle === '' ?
+              <button onClick={
+                () => this.setState({
+                  rename: false,
+                  newTitle: canvas.title
+                })
+              }>Cancel</button> :
+              <button
+                className='save'
+                onClick={() => this.handleRename(canvas)}
+              >
                 Save New Title
               </button>
             }
