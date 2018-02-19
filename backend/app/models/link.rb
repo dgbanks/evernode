@@ -6,11 +6,11 @@ class Link < ApplicationRecord
   #   foreign_key: :source_id,
   #   class_name: :Node
 
-  has_one :source,
-    primary_key: :id,
-    foreign_key: :source_id,
-    class_name: :Node,
-    dependent: :destroy
+  # has_one :source,
+  #   primary_key: :id,
+  #   foreign_key: :source_id,
+  #   class_name: :Node,
+  #   dependent: :destroy
 
   has_one :target,
     primary_key: :id,
