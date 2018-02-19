@@ -1,5 +1,5 @@
 @canvases.each do |canvas|
   json.set! canvas.id do
-    json.partial! "api/canvases/canvas", canvas: canvas
+    json.extract! canvas, :id, :title
   end
 end
