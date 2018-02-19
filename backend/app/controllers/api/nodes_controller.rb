@@ -2,6 +2,9 @@ class Api::NodesController < ApplicationController
   def create
     @node = Node.new(node_params)
     if @node.save
+      if params[:source_id]
+        Link.create({source_id: params[:source_id], target_id: @node.id})
+      end
       render :show
     else
       render json: @node.errors.full_messages, status: 422
