@@ -29,7 +29,7 @@
   font-size: 15px;
 }
 
-.navbar a {
+.navbar a, .navbar p {
   margin: 0px 10px;
   color: gray;
 }
@@ -41,8 +41,114 @@
 }
 
 .dash-index {
-  margin-top: 100px;
-  height: 100px;
+  margin-top: 50px;
   width: 70%;
+  // border: 1px solid black;
+}
+
+.index-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // border: 1px solid black;
+  padding: 0px 25px;
+  height: 50px;
+  // width: 100%;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 30px;
+}
+
+.index-header button {
+  height: 40px;
+  width: 175px;
+  border: 0px;
+  font-size: 25px;
+  font-family: "Trebuchet MS", sans-serif;
+  color: white;
+  background-color: #70b2d8;
+}
+
+.index-header button:hover {
+  background-color: darken(#70b2d8, 10);
+  cursor: pointer;
+}
+
+.index {
   border: 1px solid black;
+  min-height: 50px;
+  width: 100%;
+}
+
+.canvas-form {
+  display: flex;
+}
+
+.canvas-form button {
+  width: 100px;
+}
+
+.canvas-form button:first-of-type {
+  background-color: lightgray;
+}
+
+.canvas-form button:first-of-type:hover {
+  background-color: darken(lightgray, 10);
+}
+
+.canvas-form input {
+  width: 250px;
+  font-size: 20px;
+}
+
+.index-item {
+  height: 35px;
+  border: 1px solid black;
+  background-color: white;
+  padding: 0px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 20px;
+}
+
+.index div:hover, button:hover {
+  cursor: pointer;
+}
+
+.index div:hover h1 {
+  color: #70b2d8;
+  text-decoration: underline;
+}
+
+.index-options-container {
+  width: 35%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.index-options-container button, .index-options-container input {
+  width: 45%;
+  height: 75%;
+  font-size: 15px;
+  font-family: "Trebuchet MS", sans-serif;
+  background-color: lightgray;
+}
+
+.index-options-container input {
+  background-color: white;
+}
+
+.index-options-container button:first-child:hover {
+  background-color: #70b2d8;
+}
+
+.index-options-container button:last-child:hover {
+  background-color: #f44262;
+}
+
+.rename button:last-child:hover {
+  background-color: #70b2d8;
 }

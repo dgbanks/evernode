@@ -1,0 +1,41 @@
+// Place all the styles related to the api/canvases controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.canvas {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.canvas-nav {
+  height: 50px;
+  width: 70%;
+  font-size: 30px;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.svg {
+  background-color: pink;
+}
+
+.x {
+  left: 0;
+}
+
+.fa-times:hover {
+  cursor: pointer;
+  color: darken(white, 10);
+}
+
+.canvas-title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-family: "Trebuchet MS", sans-serif;
+
+}

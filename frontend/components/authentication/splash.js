@@ -7,17 +7,9 @@ import Dashboard from './dashboard';
 class Splash extends React.Component {
   constructor(props) {
     super(props);
-    console.log('hit SPLASH constructor', props);
 
     this.handleLogin = this.handleLogin.bind(this);
     this.transitionColor = this.transitionColor.bind(this);
-  }
-
-  componentWillMount() {
-    if (this.props.currentUser) {
-      console.log('CURRENT USER');
-      // history.replace('/dashboard');
-    }
   }
 
   transitionColor() {
@@ -29,8 +21,6 @@ class Splash extends React.Component {
   }
 
   handleLogin() {
-    // console.log('this.props.auth', this.props.auth);
-    console.log(this.props);
     this.props.auth.login();
   }
 
