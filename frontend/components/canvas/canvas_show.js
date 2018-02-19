@@ -63,9 +63,18 @@ class CanvasShow extends React.Component {
       .linkDistance(300)
       .start();
 
-    const link = svg.selectAll('.link').data(this.props.links).enter().append('line').attr('class', 'link');
+    const link = svg.selectAll('.link')
+      .data(this.props.links)
+      .enter()
+      .append('line')
+      .attr('class', 'link');
 
-    const node = svg.selectAll('.node').data(force.nodes()).enter().append('circle').attr('class', 'node').attr('r', 5);
+    const node = svg.selectAll('.node')
+      .data(force.nodes())
+      .enter()
+      .append('circle')
+      .attr('class', 'node')
+      .attr('r', 5);
 
 
 
