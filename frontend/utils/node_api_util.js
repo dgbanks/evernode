@@ -11,3 +11,11 @@ export const getNode = nodeId => (
 export const getNodes = canvasId => (
   axios.get('http://localhost:3000/api/nodes', { canvasId })
 );
+
+export const patchNode = node => (
+  axios.patch(`http://localhost:3000/api/nodes/${node.id}`, {node})
+);
+
+export const deleteNode = nodeId => (
+  axios.delete(`http://localhost:3000/api/nodes/${nodeId}`)
+);

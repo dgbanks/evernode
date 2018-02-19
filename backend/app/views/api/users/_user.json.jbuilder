@@ -1,1 +1,1 @@
-json.extract! user, :id, :first_name, :canvases
+json.extract! user, :id, :first_name

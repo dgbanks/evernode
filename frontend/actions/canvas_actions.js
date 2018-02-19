@@ -1,7 +1,7 @@
 import * as CanvasUtil from '../utils/canvas_api_util';
 
 export const RECEIVE_CANVAS = 'RECEIVE_CANVAS';
-export const RECEIVE_ALL_CANVASES = 'RECEIVE_ALL_CANVASES';
+export const RECEIVE_USER_CANVASES = 'RECEIVE_USER_CANVASES';
 export const RECEIVE_CANVAS_ERRORS = 'RECEIVE_CANVAS_ERRORS';
 export const REMOVE_CANVAS = 'REMOVE_CANVAS';
 
@@ -11,7 +11,7 @@ export const receiveCanvas = canvas => ({
 });
 
 export const receiveAllCanvases = canvases => ({
-  type: RECEIVE_ALL_CANVASES,
+  type: RECEIVE_USER_CANVASES,
   canvases
 });
 

@@ -1,6 +1,6 @@
 import {
   RECEIVE_CANVAS,
-  RECEIVE_ALL_CANVASES,
+  RECEIVE_USER_CANVASES,
   REMOVE_CANVAS
 } from '../actions/canvas_actions';
 
@@ -9,7 +9,7 @@ export const CanvasesReducer = (prevState = {}, action) => {
   switch (action.type) {
     case RECEIVE_CANVAS:
       return Object.assign({}, prevState, { [action.canvas.data.id]: action.canvas.data});
-    case RECEIVE_ALL_CANVASES:
+    case RECEIVE_USER_CANVASES:
       return action.canvases.data;
     case REMOVE_CANVAS:
       let newState = Object.assign({}, prevState);

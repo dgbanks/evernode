@@ -39,7 +39,7 @@ class IndexItem extends React.Component {
       <div className='index-item'>
         <Link
           to={`/canvases/${canvas.id}`}
-          style={{textDecoration: 'none', color: 'black'}}>
+          style={{ textDecoration: 'none', color: 'black' }}>
           <h1>{canvas.title}</h1>
         </Link>
         {

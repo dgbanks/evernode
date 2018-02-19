@@ -28,8 +28,10 @@ export default class Auth {
   }
 
   handleAuthentication() {
+    console.log('handleAuthentication');
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
+        console.log('authResult', authResult);
         localStorage.setItem('access_token', authResult.accessToken);
         history.replace('/callback');
       } else if (err) {

@@ -1,11 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {
-  createCanvas,
-  fetchCanvas,
-  fetchUserCanvases
-} from '../../actions/canvas_actions';
+import { createCanvas, fetchUserCanvases } from '../../actions/canvas_actions';
 import IndexItem from './index_item';
 
 class CanvasIndex extends React.Component {
@@ -64,12 +60,12 @@ class CanvasIndex extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
   currentUser: ownProps.currentUser,
-  canvases: Object.keys(state.entities.canvases).map(id => state.entities.canvases[id])
+  canvases: Object.keys(state.entities.canvases)
+    .map(id => state.entities.canvases[id])
 });
 
 const mapDispatchToProps = dispatch => ({
   createCanvas: canvas => dispatch(createCanvas(canvas)),
-  fetchCanvas: canvasId => dispatch(fetchCanvas(canvasId)),
   fetchUserCanvases: ownerId => dispatch(fetchUserCanvases(ownerId))
 });
 
