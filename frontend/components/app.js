@@ -16,17 +16,15 @@ const handleAuthentication = ({location}) => {
 };
 
 const App = () => (
-  <main>
-    <Switch>
-        <Route exact path='/' render={(props) => <Splash auth={auth} {...props} /> } />
-        <Route path='/callback' render={(props) => {
-          console.log('CALLBACK ROUTE');
-          handleAuthentication(props);
-          return <Callback auth={auth} {...props} />;
-        }}/>
-        <Route path='/canvases/:canvasId' component={CanvasShow} />
-    </Switch>
-  </main>
+  <Switch>
+      <Route exact path='/' render={(props) => <Splash auth={auth} {...props} /> } />
+      <Route path='/callback' render={(props) => {
+        console.log('CALLBACK ROUTE');
+        handleAuthentication(props);
+        return <Callback auth={auth} {...props} />;
+      }}/>
+      <Route path='/canvases/:canvasId' component={CanvasShow} />
+  </Switch>
 );
 
 export default App;

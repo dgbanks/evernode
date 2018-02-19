@@ -1,1 +1,1 @@
-json.extract! link, :id, :source_id, :target
+json.extract! link, :id, :source_id, :target_id

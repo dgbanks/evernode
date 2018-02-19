@@ -34,7 +34,7 @@ class CanvasIndex extends React.Component {
         <div className='index-header'>
           {
             numberOfCanvases ?
-            <h1>{numberOfCanvases} Open { numberOfCanvases === 1 ? 'Canvas' : 'Canvases'} </h1> :
+            <h1>{numberOfCanvases} Open { numberOfCanvases === 1 ? 'Canvas' : 'Canvases'}</h1> :
             <h1>You have no canvases</h1>
           }
           {

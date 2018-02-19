@@ -8,7 +8,11 @@ export const CanvasesReducer = (prevState = {}, action) => {
   Object.freeze(prevState);
   switch (action.type) {
     case RECEIVE_CANVAS:
-      return Object.assign({}, prevState, { [action.canvas.data.id]: action.canvas.data});
+      return Object.assign(
+        {},
+        prevState,
+        { [action.canvas.data.id]: action.canvas.data }
+      );
     case RECEIVE_USER_CANVASES:
       return action.canvases.data;
     case REMOVE_CANVAS:
