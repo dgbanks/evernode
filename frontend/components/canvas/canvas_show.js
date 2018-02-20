@@ -1,44 +1,18 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as d3 from 'd3';
 
-import * as d3Actions from '../../actions/d3_actions';
+import { d3action } from '../../actions/d3_actions';
 import { fetchCanvas } from '../../actions/canvas_actions';
 
 class CanvasShow extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props, d3, window, document);
-    this.svg, this.simulation, this.node, this.link;
   }
 
-  componentWillMount() {
-
+  componentDidMount() {
     this.props.fetchCanvas(this.props.match.params.canvasId)
-      .then(action => {
-        const svg = d3.select("#canvas").append("svg")
-          .attr("height", "100vh")
-          .attr("width", "100vw")
-          .attr("fill", "white");
-        const simulation = d3.forceSimulation()
-          .nodes(action.canvas.data.nodes)
-          .force("center_force", d3.forceCenter(
-            window.innerWidth / 2,
-            window.innerHeight / 2
-          )).force("charge_force", d3.forceManyBody());
-
-        const node = svg.append("g").attr("class", "nodes")
-          .selectAll("circle")
-          .data(action.canvas.data.nodes)
-          .enter()
-          .append("circle")
-          .attr("r", 50)
-          .attr("fill", "red");
-
-        simulation.on("tick", () => d3Actions.tickActions(node));
-      });
-
+      .then(action => d3action(action));
   }
 
   navbar() {
