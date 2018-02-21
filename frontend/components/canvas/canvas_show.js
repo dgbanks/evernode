@@ -38,7 +38,7 @@ class CanvasShow extends React.Component {
           .attr("id", d => `node${d.id}`)
           .on("click", (e) => {
             console.log('NODE CLICKED', e);
-            g.selectAll(".selected").classed("selected", false);
+            // g.selectAll(".selected").classed("selected", false);
             if (!this.state.selected || (this.state.selected.id !== e.id)) {
               g.select(`#node${e.id}`).classed("selected", true);
             }
@@ -97,6 +97,7 @@ class CanvasShow extends React.Component {
       d3.select('#canvas').classed('compress-canvas', true);
     } else {
       d3.select('#canvas').classed('compress-canvas', false);
+      d3.select(".selected").classed("selected", false);
     }
 
     console.log('render');
