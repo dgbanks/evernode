@@ -4,13 +4,54 @@
 
 .editor {
   display: flex;
+  flex-direction: column;
   align-items: center;
   height: 100vh;
   width: 40%;
   top: 0;
   border: 3px solid yellow;
+  background-color: white;
+}
+
+.rq-div {
+  height: 70%;
+  width: 100%;
+  border: 2px solid #70b2d8;
 }
 
 .ql-container {
   background-color: white;
+  border: 5px solid #70b2d8;
+}
+
+.editor-footer {
+  height: 15%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.editor-footer button {
+  height: 50%;
+  width: 35%;
+  margin-left: 10%;
+  color: white;
+  font-size: 20px;
+  font-family: "Trebuchet MS", sans-serif;
+}
+
+.editor-footer button:first-child {
+  background-color: #70b2d8;
+}
+
+.editor-footer button:last-child {
+  background-color: #f44262;
+}
+
+button:first-child:hover {
+  background-color: darken(#70b2d8, 10);
+}
+
+button:last-child:hover {
+  background-color: darken(#f44262, 10);
 }

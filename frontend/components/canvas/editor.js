@@ -14,11 +14,22 @@ class Editor extends React.Component {
   }
 
   render() {
+    console.log('ReactQuill', ReactQuill);
     return (
       <div className='editor'>
-        <ReactQuill
-          value={this.props.node.title}
-          style={{height:'75%', width:'100%', backgroundColor:'white'}} />
+        <div style={{height:'15%', width: '100%', border:"2px solid black"}}>
+
+        </div>
+        <div className='rq-div'>
+          <ReactQuill
+            style={{height:'92.5%'}}
+            value={this.props.node.title}>
+          </ReactQuill>
+        </div>
+        <div className='editor-footer'>
+          <button>Save Changes</button>
+          <button>Discard Changes</button>
+        </div>
       </div>
     );
   }
