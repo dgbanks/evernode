@@ -1,23 +1,5 @@
 import * as d3 from 'd3';
 
-// export const tickActions = (node) => {
-//   node
-//     .attr('cx', function(d) { return d.x; })
-//     .attr('cy', function(d) { return d.y; });
-// };
-//
-// export const zoomActions = (arg) => {
-//   arg.attr("transform", d3.event.transform);
-// };
-//
-// export const dragStart = (d) => {
-//   if (d3.event) {
-//
-//   }
-//   d.fx =
-// };
-
-
 export const d3action = (action) => {
   const svg = d3.select("#canvas").append("svg")
     .attr("height", "100vh")
@@ -38,7 +20,9 @@ export const d3action = (action) => {
     .enter()
     .append("circle")
     .attr("r", 50)
-    .attr("fill", "red");
+    .attr("fill", "red")
+    .on("click", () => this.setState({ selected: d3.event.target.__data__}));
+    // .on("click", () => d3.select(d3.event.target).attr("id", "selected"));
 
   simulation.on("tick", () => {
     node
@@ -46,8 +30,7 @@ export const d3action = (action) => {
       .attr('cy', function(d) { return d.y; });
   });
 
-/////
-  // const zoomAction = () => g.attr("transform", d3.event.transform);
+/// zoom
 
   const zoomHandler = d3.zoom().on("zoom", () => {
     g.attr("transform", d3.event.transform);
@@ -55,17 +38,17 @@ export const d3action = (action) => {
 
   zoomHandler(svg);
 
+/// drag
+
   const dragHandler = d3.drag()
     .on("start", (d) => {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
       d.fx = d.x;
       d.fy = d.y;
-    })
-    .on("drag", (d) => {
+    }).on("drag", (d) => {
       d.fx = d3.event.x;
       d.fy = d3.event.y;
-    })
-    .on("end", (d) => {
+    }).on("end", (d) => {
       if (!d3.event.active) simulation.alphaTarget(0);
       d.fx = null;
       d.fy = null;

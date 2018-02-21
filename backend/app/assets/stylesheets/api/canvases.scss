@@ -37,5 +37,14 @@
   display: flex;
   justify-content: center;
   font-family: "Trebuchet MS", sans-serif;
+}
 
+.nodes {
+  stroke: none;
+  opacity: .5;
+}
+
+.selected {
+  stroke: yellow;
+  stroke-width: 2px;
 }
