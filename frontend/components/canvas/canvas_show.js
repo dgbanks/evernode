@@ -17,13 +17,7 @@ class CanvasShow extends React.Component {
       .then(action => {
         const svg = d3.select("#canvas").append("svg")
           .attr("height", "100vh")
-          .attr("width", "100vw")
-          .on("click", (x, y, z) => {
-            console.log('SVG CLICKED', x, y, z);
-            if (this.state.selected) {
-              // g.selectAll(".selected").classed("selected", false);
-            }
-          });
+          .attr("width", "100vw");
 
         const simulation = d3.forceSimulation()
           .nodes(action.canvas.data.nodes)
@@ -86,10 +80,10 @@ class CanvasShow extends React.Component {
   }
 
   navbar() {
-    // <i className="fas fa-times"></i>
     return (
       <div className='canvas-nav'>
         <div className='x' onClick={() => this.props.history.goBack()}>
+          <i className="fas fa-times"></i>
         </div>
         <div className='canvas-title'>
           <h1>Canvas: {this.props.canvas.title}</h1>
@@ -122,6 +116,12 @@ class CanvasShow extends React.Component {
         }}>
           <div className='canvas' id='canvas'>
             {this.navbar()}
+          </div>
+          <div
+            style={{backgroundColor:'white', height: '50px', width:'25px'}}
+            onClick={() => this.setState({ selected: null })}
+          >
+            <i style={{fontSize:'50px'}} className="fas fa-angle-right"></i>
           </div>
           {this.state.selected ? <Editor node={this.state.selected} /> : <div/>}
         </div>
