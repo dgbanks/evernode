@@ -1,7 +1,9 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import * as d3 from 'd3';
+import Editor from './editor';
 import { fetchCanvas } from '../../actions/canvas_actions';
 
 class CanvasShow extends React.Component {
@@ -16,7 +18,8 @@ class CanvasShow extends React.Component {
         const svg = d3.select("#canvas").append("svg")
           .attr("height", "100vh")
           .attr("width", "100vw")
-          .on("click", (e) => {
+          .on("click", (x, y, z) => {
+            console.log('SVG CLICKED', x, y, z);
             if (this.state.selected) {
               // g.selectAll(".selected").classed("selected", false);
             }
@@ -40,13 +43,12 @@ class CanvasShow extends React.Component {
           .attr("fill", "red")
           .attr("id", d => `node${d.id}`)
           .on("click", (e) => {
+            console.log('NODE CLICKED', e);
             g.selectAll(".selected").classed("selected", false);
             if (!this.state.selected || (this.state.selected.id !== e.id)) {
               g.select(`#node${e.id}`).classed("selected", true);
             }
-            this.setState({
-              selected: this.state.selected === e ? null : e
-            });
+            this.setState({ selected: this.state.selected === e ? null : e });
           });
 
         simulation.on("tick", () => {
@@ -107,12 +109,17 @@ class CanvasShow extends React.Component {
       );
     } else {
       return (
-        <div className='canvas' id='canvas'>
+        <div style={{
+          display:'flex',
+          alignItems:'center',
+          backgroundColor: 'black'
+        }}>
+          <div className='canvas' id='canvas'>
           {this.navbar()}
+          </div>
         </div>
       );
     }
-
   }
 }
 
