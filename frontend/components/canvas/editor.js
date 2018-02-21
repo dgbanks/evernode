@@ -18,13 +18,18 @@ class Editor extends React.Component {
     return (
       <div className='editor'>
         <div style={{height:'15%', width: '100%', border:"2px solid black"}}>
+          <div className='editor-header'>
 
+          </div>
+          <input
+          placeholder='New Node'
+          onChange={e => this.setState({ title: e.target.value })}
+          />
         </div>
         <div className='rq-div'>
           <ReactQuill
-            style={{height:'92.5%'}}
-            value={this.props.node.title}>
-          </ReactQuill>
+            onChange={delta => this.setState({ body: delta })}
+          />
         </div>
         <div className='editor-footer'>
           <button>Save Changes</button>
