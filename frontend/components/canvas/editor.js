@@ -17,14 +17,14 @@ class Editor extends React.Component {
     console.log('ReactQuill', ReactQuill);
     return (
       <div className='editor'>
-        <div style={{height:'15%', width: '100%', border:"2px solid black"}}>
-          <div className='editor-header'>
-
+        <div className='editor-header'>
+          <div>
+            <input
+              placeholder='New Node'
+              onChange={e => this.setState({ title: e.target.value })}
+            />
+            <i class="fas fa-expand-arrows-alt"></i>
           </div>
-          <input
-          placeholder='New Node'
-          onChange={e => this.setState({ title: e.target.value })}
-          />
         </div>
         <div className='rq-div'>
           <ReactQuill
