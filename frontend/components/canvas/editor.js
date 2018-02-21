@@ -10,7 +10,6 @@ class Editor extends React.Component {
   }
 
   componentWillMount() {
-    
     console.log('editorDidMount', this.props.node);
   }
 
@@ -19,7 +18,7 @@ class Editor extends React.Component {
       <div className='editor'>
         <ReactQuill
           value={this.props.node.title}
-          style={{height:'100vh', backgroundColor:'white'}} />
+          style={{height:'75%', width:'100%', backgroundColor:'white'}} />
       </div>
     );
   }

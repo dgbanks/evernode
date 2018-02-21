@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import * as d3 from 'd3';
 import Editor from './editor';
 import { fetchCanvas } from '../../actions/canvas_actions';
@@ -13,6 +12,7 @@ class CanvasShow extends React.Component {
   }
 
   componentDidMount() {
+    console.log('componentDidMount');
     this.props.fetchCanvas(this.props.match.params.canvasId)
       .then(action => {
         const svg = d3.select("#canvas").append("svg")
@@ -86,10 +86,10 @@ class CanvasShow extends React.Component {
   }
 
   navbar() {
-    return(
+    // <i className="fas fa-times"></i>
+    return (
       <div className='canvas-nav'>
         <div className='x' onClick={() => this.props.history.goBack()}>
-          <i className="fas fa-times"></i>
         </div>
         <div className='canvas-title'>
           <h1>Canvas: {this.props.canvas.title}</h1>
@@ -99,12 +99,18 @@ class CanvasShow extends React.Component {
   }
 
   render() {
+    if (this.state.selected) {
+      d3.select('#canvas').classed('compress-canvas', true);
+    } else {
+      d3.select('#canvas').classed('compress-canvas', false);
+    }
+
     console.log('render');
     console.log(this.state);
     if (!this.props.canvas) {
+      // <i className="fas fa-spinner fa-pulse"></i>
       return (
         <div style={{backgroundColor:'black'}} className='spinner-div'>
-          <i className="fas fa-spinner fa-pulse"></i>
         </div>
       );
     } else {
@@ -115,8 +121,9 @@ class CanvasShow extends React.Component {
           backgroundColor: 'black'
         }}>
           <div className='canvas' id='canvas'>
-          {this.navbar()}
+            {this.navbar()}
           </div>
+          {this.state.selected ? <Editor node={this.state.selected} /> : <div/>}
         </div>
       );
     }

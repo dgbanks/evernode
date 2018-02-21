@@ -3,6 +3,14 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .editor {
+  display: flex;
+  align-items: center;
   height: 100vh;
-  width: 50%
+  width: 50%;
+  top: 0;
+  border: 3px solid yellow;
+}
+
+.ql-clipboard {
+  background-color: pink;
 }
