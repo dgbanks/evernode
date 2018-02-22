@@ -97,9 +97,12 @@ class CanvasShow extends React.Component {
     );
   }
 
-  unmountEditor() {
+  unmountEditor(node) {
     this.setState({ selected: null });
-    this.props.fetchCanvas(this.props.canvas.id);
+    this.props.fetchCanvas(this.props.canvas.id).then(
+      action => d3.select(`#node${node.id}`).data(node).enter()
+    );
+
   }
 
   render() {

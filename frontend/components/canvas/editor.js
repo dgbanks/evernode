@@ -30,7 +30,9 @@ class Editor extends React.Component {
   }
 
   handleSave() {
-    this.props.editNode(this.state.node).then(() => this.props.unmount());
+    this.props.editNode(this.state.node).then(
+      action => this.props.unmount(action.node.data)
+    );
   }
 
   render() {
