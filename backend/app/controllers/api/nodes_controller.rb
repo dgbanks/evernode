@@ -22,7 +22,7 @@ class Api::NodesController < ApplicationController
   end
 
   def update
-    @node = Node.where(id: params[:id])
+    @node = Node.find(params[:id])
     if @node.update_attributes(node_params)
       render :show
     else

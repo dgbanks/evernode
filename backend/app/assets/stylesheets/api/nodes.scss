@@ -66,8 +66,17 @@ div.ql-container.ql-snow {
   padding: 0px 10px;
 }
 
-.fa-expand-arrows-alt {
-  font-size: 35px;
+.editor-header div div {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: auto;
+  font-size: 40px;
+}
+
+.editor-header div div:hover {
+  cursor: pointer;
+  color: #70b2d8;
 }
 
 .editor-footer {

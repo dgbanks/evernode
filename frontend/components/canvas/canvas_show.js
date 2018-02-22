@@ -9,10 +9,15 @@ class CanvasShow extends React.Component {
   constructor(props) {
     super(props);
     this.state = { selected: null };
+    this.unmountEditor = this.unmountEditor.bind(this);
+  }
+
+  componentWillReceiveProps(newProps) {
+    console.log('componentWillReceiveProps CANVAS SHOW', newProps);
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
+    console.log('componentDidMount CANVAS SHOW');
     this.props.fetchCanvas(this.props.match.params.canvasId)
       .then(action => {
         const svg = d3.select("#canvas").append("svg")
@@ -92,6 +97,11 @@ class CanvasShow extends React.Component {
     );
   }
 
+  unmountEditor() {
+    this.setState({ selected: null });
+    this.props.fetchCanvas(this.props.canvas.id);
+  }
+
   render() {
     if (this.state.selected) {
       d3.select('#canvas').classed('compress-canvas', true);
@@ -118,13 +128,20 @@ class CanvasShow extends React.Component {
           <div className='canvas' id='canvas'>
             {this.navbar()}
           </div>
-          <div
-            style={{backgroundColor:'white', height: '50px', width:'25px'}}
-            onClick={() => this.setState({ selected: null })}
-          >
+          <div style={{
+            backgroundColor:'white',
+            height: '50px',
+            width:'25px'
+          }} onClick={this.unmountEditor}>
             <i style={{fontSize:'50px'}} className="fas fa-angle-right"></i>
           </div>
-          {this.state.selected ? <Editor node={this.state.selected} /> : <div/>}
+          {
+            this.state.selected ?
+            <Editor
+              node={this.state.selected}
+              unmount={this.unmountEditor} /> :
+            <div/>
+          }
         </div>
       );
     }
