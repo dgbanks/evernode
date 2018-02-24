@@ -10,6 +10,7 @@ import CanvasShow from './canvas/canvas_show';
 const auth = new Auth();
 
 const handleAuthentication = ({location}) => {
+  console.log(location);
   if (/access_token|id_token|error/.test(location.hash)) {
     auth.handleAuthentication();
   }

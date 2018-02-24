@@ -1,11 +1,6 @@
 import * as d3 from 'd3';
 
 export const d3action = (action, nodeClick) => {
-  // console.log(action);
-  // if (action.node) {
-  //   console.log('REMOVE SVG');
-  //   d3.select('#canvas').selectAll("*").remove();
-  // }
 
   const svg = d3.select("#canvas").append("svg")
   .attr("height", "100vh")
@@ -28,14 +23,8 @@ export const d3action = (action, nodeClick) => {
   .attr("r", 50)
   .attr("fill", "red")
   .attr("id", d => `node${d.id}`)
+  .text(d => d.title)
   .on("click", (e) => nodeClick(e));
-  //   console.log('NODE CLICKED', e);
-  //   // g.selectAll(".selected").classed("selected", false);
-  //   if (!this.state.selected || (this.state.selected.id !== e.id)) {
-  //     g.select(`#node${e.id}`).classed("selected", true);
-  //   }
-  //   this.setState({ selected: this.state.selected === e ? null : e });
-  // });
 
   simulation.on("tick", () => {
     node
