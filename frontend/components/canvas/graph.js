@@ -74,6 +74,7 @@ class Graph extends React.Component {
         d3.select("circle").classed("selected", true);
       }
       this.props.handleNodeClick(e);
+      // this.setState({ makeNew: true });
     });
 
     this.simulation.on("tick", () => {
@@ -110,17 +111,7 @@ class Graph extends React.Component {
   }
 
   render() {
-
-    if (this.props.selected) {
-      d3.select('.canvas-flex').classed('compress-canvas', true);
-    } else {
-      d3.select('.canvas-flex').classed('compress-canvas', false);
-      d3.select(".selected").classed("selected", false);
-    }
-
-    return (
-        <svg id='graph' width='100%' height='100%'></svg>
-    );
+    return <svg id='graph' width='100%' height='100%'></svg>;
   }
 }
 

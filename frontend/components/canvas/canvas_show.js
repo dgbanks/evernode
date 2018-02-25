@@ -88,10 +88,12 @@ class CanvasShow extends React.Component {
             <div style={{
               display:'flex', alignItems:'center', width: '40%'
             }}>
-              <div style={{
-                backgroundColor:'white',height: '50px',width:'25px'
-              }} onClick={this.unmountEditor}>
-                <i style={{fontSize:'50px'}} className="fas fa-angle-right"></i>
+              <div style={{display:'flex', flexDirection:'column'}}>
+                <div style={{
+                  backgroundColor:'white', height: '50px', width:'25px'
+                }} onClick={this.unmountEditor}>
+                  <i style={{fontSize:'50px'}} className="fas fa-angle-right"></i>
+                </div>
               </div>
               <Editor
                 node={this.state.selected}
