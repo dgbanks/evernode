@@ -13,23 +13,7 @@ class Graph extends React.Component {
   }
 
   componentDidUpdate() {
-    this.graph
-       .selectAll('circle')
-       .data(this.props.nodes)
-       .exit();
-
-    this.graph
-      .selectAll('circle')
-      .data(this.props.nodes)
-      .enter()
-      .append('circle')
-      .attr("r", 50)
-      .attr("fill", "red")
-      .attr("id", d => d.id)
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y);
-
-      this.restart();
+    this.restart();
 
     if (this.props.selected) {
       d3.select('.canvas-flex').classed('compress-canvas', true);
@@ -40,36 +24,26 @@ class Graph extends React.Component {
   }
 
   restart() {
+    // Apply the general update pattern to the nodes.
+    const node = this.node.data(this.props.nodes, function(d) { return d.id;});
+    node.exit().remove();
+    node.enter().append("circle").attr("fill", "red").attr("r", 50).merge(node);
 
-  // Apply the general update pattern to the nodes.
-  const node = this.node.data(this.props.nodes, function(d) { return d.id;});
-  node.exit().remove();
-  node.enter().append("circle").attr("fill", "red").attr("r", 50).merge(node);
+    // Apply the general update pattern to the links.
+    // link = link.data(links, function(d) { return d.source.id + "-" + d.target.id; });
+    // link.exit().remove();
+    // link = link.enter().append("line").merge(link);
 
-  // Apply the general update pattern to the links.
-  // link = link.data(links, function(d) { return d.source.id + "-" + d.target.id; });
-  // link.exit().remove();
-  // link = link.enter().append("line").merge(link);
+    // Update and restart the simulation.
+    this.simulation.nodes(this.props.nodes)
+    // this.simulation.force("link").links(links);
+    .force("center_force", d3.forceCenter(
+      window.innerWidth / 2,
+      window.innerHeight / 2
+    )).force("charge_force", d3.forceManyBody().strength(-100))
+    this.simulation.alpha(1).restart();
+  }
 
-  // Update and restart the simulation.
-  this.simulation.nodes(this.props.nodes)
-  // this.simulation.force("link").links(links);
-  .force("center_force", d3.forceCenter(
-    window.innerWidth / 2,
-    window.innerHeight / 2
-  )).force("charge_force", d3.forceManyBody().strength(-100))
-  this.simulation.alpha(1).restart();
-}
-
-
-// this.graph.selectAll("g").remove();
-//   .attr("height", "100vh")
-//   .attr("width", "100vw");
-
-// const graph = d3.select("#graph").append("svg")
-// .attr("height", "100vh")
-// .attr("width", "100vw");
-// const graph = this.graph;
   createGraph() {
     console.log('CREATE GRAPH');
 
@@ -147,12 +121,6 @@ class Graph extends React.Component {
     return (
         <svg id='graph' width='100%' height='100%'></svg>
     );
-    // return (
-    //   <div id='graph'>
-    //     {this.props.displayHeader()}
-    //
-    //   </div>
-    // );
   }
 }
 
