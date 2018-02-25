@@ -9,8 +9,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  // padding: 10px;
   border: 1px solid blue;
+}
+
+.canvas-body {
+  display: flex;
+  // position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .compress-canvas {
@@ -23,17 +29,19 @@
 }
 
 .canvas-nav {
+  z-index: 1;
   height: 50px;
   width: 80%;
-  display: flex;
+  display: -webkit-inline-box;
   align-items: center;
   font-size: 30px;
   color: white;
+  margin-top: 10px;
 }
-
-.canvas-nav div:first {
-  left:0;
-}
+//
+// .canvas-nav div:first {
+//   // left:0;
+// }
 
 .fa-times:hover {
   cursor: pointer;
@@ -46,6 +54,12 @@
   justify-content: center;
   font-family: "Trebuchet MS", sans-serif;
 }
+
+// #graph {
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+// }
 
 .nodes {
   stroke: none;

@@ -3,103 +3,33 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
 import {d3action} from '../../actions/d3_actions';
+import Graph from './graph';
 import Editor from './editor';
 import { fetchCanvas } from '../../actions/canvas_actions';
+import { createNode, editNode, deleteNode } from '../../actions/node_actions';
 
 class CanvasShow extends React.Component {
   constructor(props) {
     super(props);
     this.state = { selected: null };
+    this.displayHeader = this.displayHeader.bind(this);
     this.unmountEditor = this.unmountEditor.bind(this);
-    this.nodeClick = this.nodeClick.bind(this);
+    this.handleNodeClick = this.handleNodeClick.bind(this);
   }
-
-  nodeClick(e) {
-    {
-      console.log('NODE CLICKED', e);
-      // g.selectAll(".selected").classed("selected", false);
-      if (!this.state.selected || (this.state.selected.id !== e.id)) {
-        d3.select(`#node${e.id}`).classed("selected", true);
-      }
-      this.setState({ selected: this.state.selected === e ? null : e });
-    }
-  }
-
-  // componentWillReceiveProps(newProps) {
-  //   console.log('componentWillReceiveProps', newProps);
-  //   d3action(newProps.canvas, this.nodeClick);
-  // }
 
   componentDidMount() {
-    console.log('componentDidMount CANVAS SHOW');
-    this.props.fetchCanvas(this.props.match.params.canvasId)
-      .then(action => d3action(action, this.nodeClick));
-      //   {
-      //   const svg = d3.select("#canvas").append("svg")
-      //     .attr("height", "100vh")
-      //     .attr("width", "100vw");
-      //
-      //   const simulation = d3.forceSimulation()
-      //     .nodes(action.canvas.data.nodes)
-      //     .force("center_force", d3.forceCenter(
-      //       window.innerWidth / 2,
-      //       window.innerHeight / 2
-      //     )).force("charge_force", d3.forceManyBody().strength(-100));
-      //
-      //   const g = svg.append("g").attr("class", "everything");
-      //
-      //   const node = g.append("g").attr("class", "nodes")
-      //     .selectAll("circle")
-      //     .data(action.canvas.data.nodes)
-      //     .enter()
-      //     .append("circle")
-      //     .attr("r", 50)
-      //     .attr("fill", "red")
-      //     .attr("id", d => `node${d.id}`)
-      //     .on("click", (e) => {
-      //       console.log('NODE CLICKED', e);
-      //       // g.selectAll(".selected").classed("selected", false);
-      //       if (!this.state.selected || (this.state.selected.id !== e.id)) {
-      //         g.select(`#node${e.id}`).classed("selected", true);
-      //       }
-      //       this.setState({ selected: this.state.selected === e ? null : e });
-      //     });
-      //
-      //   simulation.on("tick", () => {
-      //     node
-      //       .attr('cx', function(d) { return d.x; })
-      //       .attr('cy', function(d) { return d.y; });
-      //   });
-      //
-      // /// zoom
-      //
-      //   const zoomHandler = d3.zoom().on("zoom", () => {
-      //     g.attr("transform", d3.event.transform);
-      //   });
-      //
-      //   zoomHandler(svg);
-      //
-      // /// drag
-      //
-      //   const dragHandler = d3.drag()
-      //     .on("start", (d) => {
-      //       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-      //       d.fx = d.x;
-      //       d.fy = d.y;
-      //     }).on("drag", (d) => {
-      //       d.fx = d3.event.x;
-      //       d.fy = d3.event.y;
-      //     }).on("end", (d) => {
-      //       if (!d3.event.active) simulation.alphaTarget(0);
-      //       d.fx = null;
-      //       d.fy = null;
-      //     });
-      //
-      //   dragHandler(node);
-      // });
+    console.log('CanvasShow.componentDidMount');
+    this.props.fetchCanvas(this.props.match.params.canvasId);
+      // .then(action => d3action(action, this.handleNodeClick));
   }
 
-  navbar() {
+  componentDidUpdate() {
+    console.log('CanvasShow.componentDidUpdate');
+    // this.props.fetchCanvas(this.props.match.params.canvasId)
+    //   .then(action => d3action(action, this.handleNodeClick));
+  }
+
+  displayHeader() {
     return (
       <div className='canvas-nav'>
         <div className='x' onClick={() => this.props.history.goBack()}>
@@ -112,68 +42,100 @@ class CanvasShow extends React.Component {
     );
   }
 
+  handleNodeClick(e) {
+    this.setState({ selected: this.state.selected === e ? null : e });
+  }
+
   unmountEditor(action) {
     this.setState({ selected: null });
     // this.props.fetchCanvas(this.props.canvas.id);
     console.log(d3.select(`#node${action.node.data.id}`));
-    // .then(
-    // d3action(action, this.nodeClick);
-    // );
-    // MAKES TWO!
   }
 
   render() {
-    if (this.state.selected) {
-      d3.select('#canvas').classed('compress-canvas', true);
-    } else {
-      d3.select('#canvas').classed('compress-canvas', false);
-      d3.select(".selected").classed("selected", false);
-    }
-
     console.log('render');
     console.log(this.state);
     if (!this.props.canvas) {
-      // <i className="fas fa-spinner fa-pulse"></i>
       return (
         <div style={{backgroundColor:'black'}} className='spinner-div'>
         </div>
       );
     } else {
       return (
-        <div style={{
-          display:'flex',
-          alignItems:'center',
-          backgroundColor: 'black'
-        }}>
-          <div className='canvas' id='canvas'>
-            {this.navbar()}
+        <div className='canvas'>
+          {this.displayHeader()}
+          <div className='canvas-body'>
+            <Graph
+              nodes={this.props.canvas.nodes}
+              selected={this.state.selected}
+              displayHeader={this.displayHeader}
+              handleNodeClick={this.handleNodeClick}
+            />
+            {
+              this.state.selected ?
+              <div style={{
+                display:'flex', alignItems:'center', width: '40%'
+              }}>
+                <div style={{
+                  backgroundColor:'white',height: '50px',width:'25px'
+                }} onClick={this.unmountEditor}>
+                  <i style={{fontSize:'50px'}} className="fas fa-angle-right"></i>
+                </div>
+                <Editor
+                  node={this.state.selected}
+                  unmount={this.unmountEditor}
+                  editNode={this.props.editNode}
+                />
+              </div> :
+              <div/>
+            }
           </div>
-          <div style={{
-            backgroundColor:'white',
-            height: '50px',
-            width:'25px'
-          }} onClick={this.unmountEditor}>
-            <i style={{fontSize:'50px'}} className="fas fa-angle-right"></i>
-          </div>
-          {
-            this.state.selected ?
-            <Editor
-              node={this.state.selected}
-              unmount={this.unmountEditor} /> :
-            <div/>
-          }
         </div>
       );
+
+      // return (
+      //   <div style={{
+      //     display:'flex',
+      //     alignItems:'center',
+      //     backgroundColor: 'black'
+      //   }}>
+      //     <div className='canvas' id='canvas'>
+      //       {this.displayHeader()}
+      //     </div>
+      //     <div style={{
+      //       backgroundColor:'white',
+      //       height: '50px',
+      //       width:'25px'
+      //     }} onClick={this.unmountEditor}>
+      //       <i style={{fontSize:'50px'}} className="fas fa-angle-right"></i>
+      //     </div>
+      //     {
+      //       this.state.selected ?
+      //       <Editor
+      //         node={this.state.selected}
+      //         unmount={this.unmountEditor}
+      //         createNode={this.props.createNode}
+      //         editNode={this.props.editNode}
+      //         deleteNode={this.props.deleteNode} /> :
+      //       <div/>
+      //     }
+      //   </div>
+      // );
     }
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  canvas: state.entities.canvases[ownProps.match.params.canvasId]
+  canvas: state.entities.canvases[ownProps.match.params.canvasId],
+  nodes: state.entities.nodes,
+  // links: state.entities.links
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchCanvas: canvasId => dispatch(fetchCanvas(canvasId))
+  fetchCanvas: canvasId => dispatch(fetchCanvas(canvasId)),
+  createNode: node => dispatch(createNode(node)),
+  editNode: node => dispatch(editNode(node)),
+  deleteNode: nodeId => dispatch(deleteNode(nodeId))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CanvasShow));

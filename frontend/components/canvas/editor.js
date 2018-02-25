@@ -78,9 +78,9 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createNode: node => dispatch(createNode(node)),
-  editNode: node => dispatch(editNode(node)),
-  deleteNode: nodeId => dispatch(deleteNode(nodeId))
+  // createNode: node => dispatch(createNode(node)),
+  editNode: node => dispatch(editNode(node))
+  // deleteNode: nodeId => dispatch(deleteNode(nodeId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);
