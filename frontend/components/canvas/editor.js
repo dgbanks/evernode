@@ -13,12 +13,7 @@ class Editor extends React.Component {
     this.handleSave = this.handleSave.bind(this);
   }
 
-  componentWillReceiveProps(newProps) {
-    console.log('componentWillReceiveProps EDITOR', newProps);
-  }
-
   componentWillMount() {
-    console.log('editorDidMount', this.props.node);
     if (this.props.node) {
       this.setState({ node: {
         id: this.props.node.id,
@@ -30,13 +25,10 @@ class Editor extends React.Component {
   }
 
   handleSave() {
-    this.props.editNode(this.state.node).then(
-      action => this.props.unmount(action)
-    );
+    this.props.handleSave(this.state.node);
   }
 
   render() {
-    console.log('render', this.state);
     return (
       <div className='editor'>
         <div className='editor-header'>
@@ -73,14 +65,4 @@ class Editor extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  node: ownProps.node
-});
-
-const mapDispatchToProps = dispatch => ({
-  // createNode: node => dispatch(createNode(node)),
-  editNode: node => dispatch(editNode(node))
-  // deleteNode: nodeId => dispatch(deleteNode(nodeId))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Editor);
+export default Editor;
