@@ -7,7 +7,6 @@
   width: 100vw;
   background-color: black;
   display: flex;
-  flex-direction: column;
   align-items: center;
   border: 1px solid blue;
 }
@@ -21,27 +20,33 @@
 
 .compress-canvas {
   width: 60%;
-  // backg  round-color: gray;
 }
 
 .canvas:hover {
   cursor: pointer;
 }
 
+#graph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.everything {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .canvas-nav {
   z-index: 1;
   height: 50px;
   width: 80%;
-  display: -webkit-inline-box;
+  display: flex;
   align-items: center;
   font-size: 30px;
   color: white;
-  margin-top: 10px;
 }
-//
-// .canvas-nav div:first {
-//   // left:0;
-// }
 
 .fa-times:hover {
   cursor: pointer;
@@ -55,11 +60,6 @@
   font-family: "Trebuchet MS", sans-serif;
 }
 
-// #graph {
-//   position: absolute;
-//   left: 0;
-//   top: 0;
-// }
 
 .nodes {
   stroke: none;

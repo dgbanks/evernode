@@ -63,35 +63,65 @@ class CanvasShow extends React.Component {
     } else {
       return (
         <div className='canvas'>
-          {this.displayHeader()}
-          <div className='canvas-body'>
-            <Graph
-              nodes={this.props.canvas.nodes}
-              selected={this.state.selected}
-              displayHeader={this.displayHeader}
-              handleNodeClick={this.handleNodeClick}
-            />
-            {
-              this.state.selected ?
+          <Graph
+            nodes={this.props.canvas.nodes}
+            selected={this.state.selected}
+            displayHeader={this.displayHeader}
+            handleNodeClick={this.handleNodeClick}
+          />
+
+          {
+            this.state.selected ?
+            <div style={{
+              display:'flex', alignItems:'center', width: '40%'
+            }}>
               <div style={{
-                display:'flex', alignItems:'center', width: '40%'
-              }}>
-                <div style={{
-                  backgroundColor:'white',height: '50px',width:'25px'
-                }} onClick={this.unmountEditor}>
-                  <i style={{fontSize:'50px'}} className="fas fa-angle-right"></i>
-                </div>
-                <Editor
-                  node={this.state.selected}
-                  unmount={this.unmountEditor}
-                  editNode={this.props.editNode}
-                />
-              </div> :
-              <div/>
-            }
-          </div>
+                backgroundColor:'white',height: '50px',width:'25px'
+              }} onClick={this.unmountEditor}>
+                <i style={{fontSize:'50px'}} className="fas fa-angle-right"></i>
+              </div>
+              <Editor
+                node={this.state.selected}
+                unmount={this.unmountEditor}
+                editNode={this.props.editNode}
+              />
+            </div> :
+            <div/>
+          }
         </div>
       );
+
+      // return (
+      //   <div className='canvas'>
+      //     {this.displayHeader()}
+      //     <div className='canvas-body'>
+      //       <Graph
+      //         nodes={this.props.canvas.nodes}
+      //         selected={this.state.selected}
+      //         displayHeader={this.displayHeader}
+      //         handleNodeClick={this.handleNodeClick}
+      //       />
+      //       {
+      //         this.state.selected ?
+      //         <div style={{
+      //           display:'flex', alignItems:'center', width: '40%'
+      //         }}>
+      //           <div style={{
+      //             backgroundColor:'white',height: '50px',width:'25px'
+      //           }} onClick={this.unmountEditor}>
+      //             <i style={{fontSize:'50px'}} className="fas fa-angle-right"></i>
+      //           </div>
+      //           <Editor
+      //             node={this.state.selected}
+      //             unmount={this.unmountEditor}
+      //             editNode={this.props.editNode}
+      //           />
+      //         </div> :
+      //         <div/>
+      //       }
+      //     </div>
+      //   </div>
+      // );
 
       // return (
       //   <div style={{

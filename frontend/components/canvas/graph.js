@@ -13,7 +13,20 @@ class Graph extends React.Component {
   }
 
   componentDidUpdate() {
+    console.log('Graph.componentDidUpdate');
     // this.createGraph();
+
+    d3.select("#graph")
+      .selectAll('circle')
+      .data(this.props.nodes)
+      .enter()
+      .append('circle');
+
+   d3.select("#graph")
+      .selectAll('rect')
+      .data(this.props.nodes)
+      .exit()
+      .remove();
 
     if (this.props.selected) {
       d3.select('#graph').classed('compress-canvas', true);
@@ -24,7 +37,9 @@ class Graph extends React.Component {
   }
 
   createGraph() {
-    // const graph = d3.select('#graph');
+    // const graph = d3.select('#graph')
+    //   .attr("height", "100vh")
+    //   .attr("width", "100vw");
 
     const graph = d3.select("#graph").append("svg")
     .attr("height", "100vh")
@@ -39,17 +54,17 @@ class Graph extends React.Component {
 
     const g = graph.append("g").attr("class", "everything");
 
-    d3.select(node)
-      .selectAll('circle')
-      .data(this.props.nodes)
-      .enter()
-      .append('circle');
-
-   d3.select(node)
-      .selectAll('rect')
-      .data(this.props.nodes)
-      .exit()
-      .remove();
+   //  d3.select("node")
+   //    .selectAll('circle')
+   //    .data(this.props.nodes)
+   //    .enter()
+   //    .append('circle');
+   //
+   // d3.select("node")
+   //    .selectAll('rect')
+   //    .data(this.props.nodes)
+   //    .exit()
+   //    .remove();
 
     const node = g.append("g").attr("class", "nodes")
     .selectAll("circle")
@@ -102,7 +117,9 @@ class Graph extends React.Component {
 
   render() {
     return (
-      <div id='graph'></div>
+      <div id='graph'>
+        {this.props.displayHeader()}
+      </div>
     );
   }
 }
