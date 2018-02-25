@@ -39,7 +39,7 @@
 }
 
 .canvas-nav {
-  z-index: 1;
+  z-index: 1000;
   height: 50px;
   width: 80%;
   display: flex;
@@ -68,7 +68,7 @@
 
 .selected {
   stroke: yellow;
-  stroke-width: 2px;
+  stroke-width: 5px;
 }
 
 div .fa-angle-right:hover {

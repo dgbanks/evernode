@@ -16,7 +16,7 @@ class CanvasShow extends React.Component {
     this.handleSave = this.handleSave.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     console.log('CanvasShow.componentDidMount');
     this.props.fetchCanvas(this.props.match.params.canvasId);
   }
@@ -68,14 +68,21 @@ class CanvasShow extends React.Component {
     } else {
       return (
         <div className='canvas'>
+          <div className='canvas-flex' style={{
+            height: height,
+            width: width,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
+          {this.displayHeader()}
           <Graph
             nodes={this.props.canvas.nodes}
             selected={this.state.selected}
             displayHeader={this.displayHeader}
             handleNodeClick={this.handleNodeClick}
-            size={[width, height]}
           />
-
+          </div>
           {
             this.state.selected ?
             <div style={{

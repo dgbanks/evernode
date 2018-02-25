@@ -12,84 +12,98 @@ class Graph extends React.Component {
     this.createGraph();
   }
 
-  componentWillReceiveProps(newProps) {
-    console.log('Graph.componentWillReceiveProps', newProps);
-  }
-
   componentDidUpdate() {
-    console.log('Graph.componentDidUpdate');
+    this.graph
+       .selectAll('circle')
+       .data(this.props.nodes)
+       .exit();
 
-    // d3
-    //    .selectAll('circle')
-    //    .data(this.props.nodes)
-    //    .exit()
-    //    .remove();
-
-    d3
+    this.graph
       .selectAll('circle')
       .data(this.props.nodes)
       .enter()
       .append('circle')
-      .attr('cx', function(d) { return d.x; })
-      .attr('cy', function(d) { return d.y; });
+      .attr("r", 50)
+      .attr("fill", "red")
+      .attr("id", d => d.id)
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y);
+
+      this.restart();
 
     if (this.props.selected) {
-      d3.select('#graph').classed('compress-canvas', true);
+      d3.select('.canvas-flex').classed('compress-canvas', true);
     } else {
-      d3.select('#graph').classed('compress-canvas', false);
+      d3.select('.canvas-flex').classed('compress-canvas', false);
       d3.select(".selected").classed("selected", false);
     }
   }
 
+  restart() {
+
+  // Apply the general update pattern to the nodes.
+  const node = this.node.data(this.props.nodes, function(d) { return d.id;});
+  node.exit().remove();
+  node.enter().append("circle").attr("fill", "red").attr("r", 50).merge(node);
+
+  // Apply the general update pattern to the links.
+  // link = link.data(links, function(d) { return d.source.id + "-" + d.target.id; });
+  // link.exit().remove();
+  // link = link.enter().append("line").merge(link);
+
+  // Update and restart the simulation.
+  this.simulation.nodes(this.props.nodes)
+  // this.simulation.force("link").links(links);
+  .force("center_force", d3.forceCenter(
+    window.innerWidth / 2,
+    window.innerHeight / 2
+  )).force("charge_force", d3.forceManyBody().strength(-100))
+  this.simulation.alpha(1).restart();
+}
+
+
+// this.graph.selectAll("g").remove();
+//   .attr("height", "100vh")
+//   .attr("width", "100vw");
+
+// const graph = d3.select("#graph").append("svg")
+// .attr("height", "100vh")
+// .attr("width", "100vw");
+// const graph = this.graph;
   createGraph() {
-    const graph = d3.select('#graph');
-    //   .attr("height", "100vh")
-    //   .attr("width", "100vw");
+    console.log('CREATE GRAPH');
 
-    // const graph = d3.select("#graph").append("svg")
-    // .attr("height", "100vh")
-    // .attr("width", "100vw");
-    // const graph = this.graph;
+    this.graph = d3.select('#graph');
 
-    const simulation = d3.forceSimulation()
-    .nodes(this.props.nodes)
+    this.simulation = d3.forceSimulation(this.props.nodes)
+    // .nodes(this.props.nodes)
     .force("center_force", d3.forceCenter(
       window.innerWidth / 2,
       window.innerHeight / 2
     )).force("charge_force", d3.forceManyBody().strength(-100));
 
-    const g = graph.append("g").attr("class", "everything");
+    const g = this.graph.append("g").attr("class", "everything");
 
-    d3.select("node")
-      .selectAll('circle')
-      .data(this.props.nodes)
-      .enter()
-      .append('circle');
-
-   d3.select("node")
-      .selectAll('circle')
-      .data(this.props.nodes)
-      .exit()
-      .remove();
-
-    const node = g.append("g").attr("class", "nodes")
+    this.node = g.append("g").attr("class", "nodes")
     .selectAll("circle")
     .data(this.props.nodes)
     .enter()
     .append("circle")
     .attr("r", 50)
     .attr("fill", "red")
-    .attr("id", d => `node${d.id}`)
+    .attr("id", d => d.id)
+    .attr("cx", d => d.x)
+    .attr("cy", d => d.y)
     .text(d => d.title)
     .on("click", (e) => {
       if (!this.props.selected || (this.props.selected.id !== e.id)) {
-        d3.select(`#node${e.id}`).classed("selected", true);
+        d3.select("circle").classed("selected", true);
       }
       this.props.handleNodeClick(e);
     });
 
-    simulation.on("tick", () => {
-      node
+    this.simulation.on("tick", () => {
+      this.node
       .attr('cx', function(d) { return d.x; })
       .attr('cy', function(d) { return d.y; });
     });
@@ -100,34 +114,38 @@ class Graph extends React.Component {
       g.attr("transform", d3.event.transform);
     });
 
-    zoomHandler(graph);
+    zoomHandler(this.graph);
 
     /// drag
 
     const dragHandler = d3.drag()
     .on("start", (d) => {
-      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      if (!d3.event.active) this.simulation.alphaTarget(0.3).restart();
       d.fx = d.x;
       d.fy = d.y;
     }).on("drag", (d) => {
       d.fx = d3.event.x;
       d.fy = d3.event.y;
     }).on("end", (d) => {
-      if (!d3.event.active) simulation.alphaTarget(0);
+      if (!d3.event.active) this.simulation.alphaTarget(0);
       d.fx = null;
       d.fy = null;
     });
 
-    dragHandler(node);
+    dragHandler(this.node);
   }
 
   render() {
+
+    if (this.props.selected) {
+      d3.select('.canvas-flex').classed('compress-canvas', true);
+    } else {
+      d3.select('.canvas-flex').classed('compress-canvas', false);
+      d3.select(".selected").classed("selected", false);
+    }
+
     return (
-      <svg id='graph' 
-      width={this.props.size[0]}
-      height={this.props.size[1]}
-      >
-      </svg>
+        <svg id='graph' width='100%' height='100%'></svg>
     );
     // return (
     //   <div id='graph'>
