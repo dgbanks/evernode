@@ -113,7 +113,7 @@ class CanvasShow extends React.Component {
 const mapStateToProps = (state, ownProps) => ({
   canvas: state.entities.canvases[ownProps.match.params.canvasId],
   nodes: state.entities.nodes,
-  // links: state.entities.links
+  links: state.entities.links
 });
 
 const mapDispatchToProps = dispatch => ({

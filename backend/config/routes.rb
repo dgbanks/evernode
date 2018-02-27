@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :canvases, only: [:create, :index, :show, :update, :destroy]
 
     resources :nodes, only: [:create, :index, :show, :update, :destroy]
+    resources :links, only: [:create, :index, :show, :update, :destroy]
   end
 
 end
