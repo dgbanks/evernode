@@ -4,11 +4,10 @@ class Link < ApplicationRecord
   # must use has_one and not belongs_to because a link should be
   # destroyed if EITHER the source OR the target is destroyed!
 
-  has_one :source,
+  belongs_to :source,
     primary_key: :id,
     foreign_key: :source_id,
-    class_name: :Node,
-    dependent: :destroy
+    class_name: :Node
 
   has_one :target,
     primary_key: :id,
