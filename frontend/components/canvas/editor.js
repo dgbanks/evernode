@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
 import { connect } from 'react-redux';
-import { createNode, editNode, deleteNode } from '../../actions/node_actions';
 
 class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       fullscreen: false,
+      readOnly: true,
       node: { id: null, title: '', body: '', source_id: null }
     };
     this.handleSave = this.handleSave.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.newNode = this.newNode.bind(this);
   }
 
   componentWillMount() {
@@ -24,24 +26,44 @@ class Editor extends React.Component {
     }
   }
 
+  newNode() {
+    this.setState({
+      node: Object.assign(
+        {}, this.state.node, { id: null, title: '', body: '' }
+      )
+    });
+  }
+
   handleSave() {
-    this.props.handleSave(this.state.node);
+    // if (this.state.readOnly) {
+    //   this.setState({ id: null, title: '', body: '' });
+    // }
+    this.setState({ readOnly: true });
+    this.props.handleForm(this.state.node);
+  }
+
+  handleDelete() {
+    this.props.handleForm(this.state.node.id);
   }
 
   render() {
+    console.log('state:', this.state);
     return (
       <div className='editor'>
         <div className='editor-header'>
           <div>
             <input
+              onClick={() => this.setState({ readOnly: false })}
+              readOnly={this.state.readOnly}
               placeholder='New Node'
               value={this.state.node.title}
               onChange={e => this.setState({
+                readOnly: false,
                 node: Object.assign({}, this.state.node, { title: e.target.value })
               })}
             />
             <div onClick={
-              () => this.setState({ fullscreen: !this.state.fullscreen})
+              () => this.setState({ fullscreen: !this.state.fullscreen })
             }>
               <i className="fas fa-expand"></i>
             </div>
@@ -49,17 +71,29 @@ class Editor extends React.Component {
         </div>
         <div className='rq-div'>
           <ReactQuill
+            autoFocus
+            onFocus={() => this.setState({ readOnly: false })}
+            readOnly={this.state.readOnly}
             placeholder='Optional'
             defaultValue={this.state.node.body}
+            value={this.state.node.body}
             onChange={(content, delta, source, editor) => this.setState({
+              readOnly: false,
               node: Object.assign({}, this.state.node, { body: editor.getHTML() })
             })}
           />
         </div>
-        <div className='editor-footer'>
-          <button onClick={this.handleSave}>Save Changes</button>
-          <button onClick={this.props.unmount}>Discard Changes</button>
-        </div>
+        {
+          this.state.readOnly ?
+          <div className='editor-footer'>
+            <button onClick={this.newNode}>Attach New Node</button>
+            <button onClick={this.handleDelete}>Delete This Node</button>
+          </div> :
+          <div className='editor-footer'>
+            <button onClick={this.handleSave}>Save Changes</button>
+            <button onClick={this.props.unmount}>Discard Changes</button>
+          </div>
+        }
       </div>
     );
   }

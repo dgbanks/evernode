@@ -13,16 +13,12 @@ class CanvasShow extends React.Component {
     this.displayHeader = this.displayHeader.bind(this);
     this.unmountEditor = this.unmountEditor.bind(this);
     this.handleNodeClick = this.handleNodeClick.bind(this);
-    this.handleSave = this.handleSave.bind(this);
+    this.handleForm = this.handleForm.bind(this);
   }
 
   componentWillMount() {
     console.log('CanvasShow.componentDidMount');
     this.props.fetchCanvas(this.props.match.params.canvasId);
-  }
-
-  componentDidUpdate() {
-    console.log('CanvasShow.componentDidUpdate');
   }
 
   displayHeader() {
@@ -42,17 +38,21 @@ class CanvasShow extends React.Component {
     this.setState({ selected: this.state.selected === e ? null : e });
   }
 
-  handleSave(node) {
-    this.props.editNode(node).then(
-      action => {
-        this.props.fetchCanvas(this.props.canvas.id);
-        this.unmountEditor();
-      }
-    );
+  handleForm(node) {
+    this.unmountEditor();
+    if (typeof(node) === 'number') {
+      this.props.deleteNode(node);
+    } else if (node.id) {
+      this.props.editNode(node);
+    } else {
+      // console.log('SAVE THIS');
+      this.props.createNode(node);
+    }
+    this.props.fetchCanvas(this.props.canvas.id);
   }
 
   unmountEditor() {
-    this.setState({ selected: null });
+    this.setState({ selected: null, readOnly: true });
   }
 
   render() {
@@ -98,8 +98,7 @@ class CanvasShow extends React.Component {
               <Editor
                 node={this.state.selected}
                 unmount={this.unmountEditor}
-                editNode={this.props.editNode}
-                handleSave={this.handleSave}
+                handleForm={this.handleForm}
               />
             </div> :
             <div/>
