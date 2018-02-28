@@ -48,6 +48,10 @@ class Editor extends React.Component {
   render() {
     console.log('state:', this.state);
     console.log('there is a title', Boolean(this.state.node.title));
+    const disabled = !this.state.node.title ||
+      (this.state.node.title === this.props.node.title &&
+      this.state.node.body === this.props.node.body);
+
     return (
       <div className='editor'>
         <div className='editor-header'>
@@ -90,10 +94,8 @@ class Editor extends React.Component {
             <button onClick={this.handleDelete}>Delete This Node</button>
           </div> :
           <div className='editor-footer'>
-            <button onClick={this.handleSave} style={
-              !this.state.node.title ?
-              {backgroundColor:'gray',color:'lightgray'} : {}
-            }>
+            <button onClick={this.handleSave} disabled={disabled}
+            style={disabled ? {backgroundColor:'gray',color:'lightgray'} : {}}>
               Save Changes
             </button>
             <button onClick={this.props.unmount}>Discard Changes</button>
