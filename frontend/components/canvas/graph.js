@@ -74,8 +74,12 @@ class Graph extends React.Component {
         d3.select("circle").classed("selected", true);
       }
       this.props.handleNodeClick(e);
-      // this.setState({ makeNew: true });
     });
+
+    // this.link = g.append("g").attr("class", "links")
+    // .selectAll("line")
+    // .data(this.props.links)
+
 
     this.simulation.on("tick", () => {
       this.node
