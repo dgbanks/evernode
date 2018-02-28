@@ -4,7 +4,5 @@ import { NodesReducer } from './node_reducer';
 import { LinksReducer } from './link_reducer';
 
 export const EntitiesReducer = combineReducers({
-  canvases: CanvasesReducer,
-  nodes: NodesReducer,
-  links: LinksReducer
+  canvases: CanvasesReducer
 });

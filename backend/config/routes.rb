@@ -8,10 +8,11 @@ Rails.application.routes.draw do
     post 'users/auth', to: 'users#authenticate_user'
     resources :users, only: [:show]
     resource :session, only: [:destroy]
-    resources :canvases, only: [:create, :index, :show, :update, :destroy]
-
-    resources :nodes, only: [:create, :index, :show, :update, :destroy]
-    resources :links, only: [:create, :index, :show, :update, :destroy]
+    resources :canvases, only: [:create, :index, :show, :update, :destroy] do
+      resources :nodes, only: [:create, :index, :show, :update, :destroy] do
+        resources :links, only: [:create, :index, :show, :update, :destroy]
+      end
+    end
   end
 
 end

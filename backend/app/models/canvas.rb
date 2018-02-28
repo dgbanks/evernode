@@ -12,9 +12,6 @@ class Canvas < ApplicationRecord
     class_name: :Node,
     dependent: :destroy
 
-  # after_initialize :create_title_node
-  #
-  # def create_title_node
-  #   Node.create({title: self.title, canvas_id: self.id})
-  # end
+  accepts_nested_attributes_for :nodes
+
 end
