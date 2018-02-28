@@ -35,11 +35,10 @@ class Editor extends React.Component {
   }
 
   handleSave() {
-    // if (this.state.readOnly) {
-    //   this.setState({ id: null, title: '', body: '' });
-    // }
-    this.setState({ readOnly: true });
-    this.props.handleForm(this.state.node);
+    if (this.state.node.title) {
+      this.setState({ readOnly: true });
+      this.props.handleForm(this.state.node);
+    }
   }
 
   handleDelete() {
@@ -48,6 +47,7 @@ class Editor extends React.Component {
 
   render() {
     console.log('state:', this.state);
+    console.log('there is a title', Boolean(this.state.node.title));
     return (
       <div className='editor'>
         <div className='editor-header'>
@@ -90,7 +90,12 @@ class Editor extends React.Component {
             <button onClick={this.handleDelete}>Delete This Node</button>
           </div> :
           <div className='editor-footer'>
-            <button onClick={this.handleSave}>Save Changes</button>
+            <button onClick={this.handleSave} style={
+              !this.state.node.title ?
+              {backgroundColor:'gray',color:'lightgray'} : {}
+            }>
+              Save Changes
+            </button>
             <button onClick={this.props.unmount}>Discard Changes</button>
           </div>
         }

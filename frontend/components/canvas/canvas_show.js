@@ -45,7 +45,6 @@ class CanvasShow extends React.Component {
     } else if (node.id) {
       this.props.editNode(node);
     } else {
-      // console.log('SAVE THIS');
       this.props.createNode(node);
     }
     this.props.fetchCanvas(this.props.canvas.id);
