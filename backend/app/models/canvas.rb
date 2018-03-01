@@ -12,6 +12,10 @@ class Canvas < ApplicationRecord
     class_name: :Node,
     dependent: :destroy
 
+  has_many :links,
+    through: :nodes,
+    source: :links
+
   accepts_nested_attributes_for :nodes
 
 end

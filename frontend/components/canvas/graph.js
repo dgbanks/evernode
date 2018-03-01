@@ -5,6 +5,8 @@ class Graph extends React.Component {
   constructor(props) {
     super(props);
     this.createGraph = this.createGraph.bind(this);
+    this.restart = this.restart.bind(this);
+    // this.width, this.height = window.innerWidth, window.innerHeight;
   }
 
   componentDidMount() {
@@ -24,38 +26,43 @@ class Graph extends React.Component {
   }
 
   restart() {
+    console.log('graph.restart');
     // Apply the general update pattern to the nodes.
     const node = this.node.data(this.props.nodes, function(d) { return d.id;});
     node.exit().remove();
     node.enter().append("circle").attr("fill", "red").attr("r", 50).merge(node);
 
     // Apply the general update pattern to the links.
-    // link = link.data(links, function(d) { return d.source.id + "-" + d.target.id; });
-    // link.exit().remove();
-    // link = link.enter().append("line").merge(link);
+    const link = this.link.data(this.props.links, function(d) { return d.source.id + "-" + d.target.id; });
+    link.exit().remove();
+    link.enter().append("line").attr("stroke-width", 2).merge(link);
 
     // Update and restart the simulation.
     this.simulation.nodes(this.props.nodes)
-    // this.simulation.force("link").links(links);
-    .force("center_force", d3.forceCenter(
-      window.innerWidth / 2,
-      window.innerHeight / 2
-    )).force("charge_force", d3.forceManyBody().strength(-100))
+    .force("center_force", d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2))
+    .force("charge_force", d3.forceManyBody().strength(-100))
+    // .force("link", d3.forceLink(this.props.links));
+    // .id(d => d.id));
     this.simulation.alpha(1).restart();
   }
 
   createGraph() {
-    console.log('CREATE GRAPH');
+    console.log('CREATE GRAPH', this.props);
 
     this.graph = d3.select('#graph');
 
+    console.log('applying forces');
     this.simulation = d3.forceSimulation(this.props.nodes)
-    // .nodes(this.props.nodes)
-    .force("center_force", d3.forceCenter(
-      window.innerWidth / 2,
-      window.innerHeight / 2
-    )).force("charge_force", d3.forceManyBody().strength(-100));
-
+    .force("center_force", d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2))
+    .force("charge_force", d3.forceManyBody().strength(-100))
+    console.log(this.props.links)
+    // .force("link", d3.forceLink(this.props.links));
+    // .id(d => d.id));
+    // .id(d => {
+    //   console.log(d.id);
+    //   return d.id;
+    // }));
+    console.log('finished applying forces');
     const g = this.graph.append("g").attr("class", "everything");
 
     this.node = g.append("g").attr("class", "nodes")
@@ -76,15 +83,25 @@ class Graph extends React.Component {
       this.props.handleNodeClick(e);
     });
 
-    // this.link = g.append("g").attr("class", "links")
-    // .selectAll("line")
-    // .data(this.props.links)
-
+    console.log('drawing links');
+    this.link = g.append("g").attr("class", "links")
+      .selectAll("line")
+      .data(this.props.links)
+      .enter()
+      .append("line")
+      .attr("stroke-width", 10)
+      .attr("stroke", "yellow");
 
     this.simulation.on("tick", () => {
       this.node
-      .attr('cx', function(d) { return d.x; })
-      .attr('cy', function(d) { return d.y; });
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y);
+      console.log('onTick links');
+      // this.link
+      // .attr("x1", d => {console.log(d); return d.source.x;})
+      // .attr("y1", d => {console.log(d); return d.source.y;})
+      // .attr("x2", d => {console.log(d); return d.target.x;})
+      // .attr("y2", d => {console.log(d); return d.target.y;});
     });
 
     /// zoom

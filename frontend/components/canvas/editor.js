@@ -21,7 +21,8 @@ class Editor extends React.Component {
         id: this.props.node.id,
         title: this.props.node.title,
         body: this.props.node.body,
-        source_id: this.props.node.id
+        source_id: this.props.node.id,
+        canvas_id: this.props.canvasId
       }});
     }
   }

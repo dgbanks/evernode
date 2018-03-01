@@ -77,6 +77,7 @@ class CanvasShow extends React.Component {
           {this.displayHeader()}
           <Graph
             nodes={this.props.canvas.nodes}
+            links={this.props.canvas.links}
             selected={this.state.selected}
             displayHeader={this.displayHeader}
             handleNodeClick={this.handleNodeClick}
@@ -96,6 +97,7 @@ class CanvasShow extends React.Component {
               </div>
               <Editor
                 node={this.state.selected}
+                canvasId={this.props.canvas.id}
                 unmount={this.unmountEditor}
                 handleForm={this.handleForm}
               />
@@ -109,9 +111,7 @@ class CanvasShow extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  canvas: state.entities.canvases[ownProps.match.params.canvasId],
-  nodes: state.entities.nodes,
-  links: state.entities.links
+  canvas: state.entities.canvases[ownProps.match.params.canvasId]
 });
 
 const mapDispatchToProps = dispatch => ({
