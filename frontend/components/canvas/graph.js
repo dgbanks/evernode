@@ -32,12 +32,12 @@ class Graph extends React.Component {
   restart() {
     console.log('graph.restart', window);
     // Apply the general update pattern to the links.
-    const link = this.link.data(this.props.links, function(d) { return d.source.id + "-" + d.target.id; });
+    const link = this.link.data(this.props.links, d => d.id);
     link.exit().remove();
     link.enter().append("line").attr("stroke-width", 2).merge(link);
 
     // Apply the general update pattern to the nodes.
-    const node = this.node.data(this.props.nodes, function(d) { return d.id;});
+    const node = this.node.data(this.props.nodes, d => d.id);
     node.exit().remove();
     node.enter().append("circle").attr("fill", "red").attr("r", 50).merge(node);
 
