@@ -1,9 +1,10 @@
-json.extract! canvas, :id, :title, :nodes, :links
+json.extract! canvas, :id, :title, :nodes
 
-# json.links do
-#   canvas.nodes.each do |node|
-#     json.array! node.links do |link|
-#       json.extract! link
-#     end
-#   end
-# end
+json.links canvas.links.map { |link|
+  {
+    id: link.id,
+    source: link.source_id,
+    target: link.target_id,
+    body: link.body
+  }
+}
