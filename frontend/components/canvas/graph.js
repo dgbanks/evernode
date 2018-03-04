@@ -17,13 +17,14 @@ class Graph extends React.Component {
 
   componentDidUpdate() {
     console.log('componentDidUpdate');
+    d3.select(".selected").classed("selected", false);
 
     if (this.props.selected) {
       d3.select('.canvas-flex').classed('compress-canvas', true);
+      d3.select(`#node${this.props.selected.id}`).classed("selected", true);
       this.width = window.innerWidth * .6;
     } else {
       d3.select('.canvas-flex').classed('compress-canvas', false);
-      d3.select(".selected").classed("selected", false);
       this.width = window.innerWidth;
     }
     this.restart();
@@ -31,7 +32,7 @@ class Graph extends React.Component {
 
   restart() {
     console.log('graph.restart', window);
-    
+
     // Apply the general update pattern to the links.
     const link = this.link.data(this.props.links, d => d.id);
     link.exit().remove();
@@ -51,9 +52,8 @@ class Graph extends React.Component {
   }
 
   createGraph() {
-
     this.graph = d3.select('#graph');
-    console.log('GRAPH', this.graph.size());
+
     this.simulation = d3.forceSimulation(this.props.nodes)
     .force("center_force", d3.forceCenter(this.width / 2, this.height / 2))
     .force("charge_force", d3.forceManyBody().strength(-1000).distanceMin(50))

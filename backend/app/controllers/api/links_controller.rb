@@ -4,7 +4,7 @@ class Api::LinksController < ApplicationController
     @link = Link.new({source_id: params[:source_id], target_id: params[:target_id]})
     if @link.save
       @node = @link.target
-      render "api/nodes/show"
+      render "api/links/show"
     else
       render json: ["Could not join nodes"], status: 422
     end

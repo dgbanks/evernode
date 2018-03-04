@@ -16,6 +16,6 @@ class Canvas < ApplicationRecord
     through: :nodes,
     source: :links
 
-  accepts_nested_attributes_for :nodes
+  # accepts_nested_attributes_for :nodes
 
 end
