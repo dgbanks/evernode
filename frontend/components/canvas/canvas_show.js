@@ -35,6 +35,8 @@ class CanvasShow extends React.Component {
   }
 
   handleNodeClick(e) {
+    console.log(e);
+    // problem: multiple nodes with 'selected' class!
     this.setState({ selected: this.state.selected === e ? null : e });
   }
 
