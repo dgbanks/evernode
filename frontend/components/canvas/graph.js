@@ -31,6 +31,7 @@ class Graph extends React.Component {
 
   restart() {
     console.log('graph.restart', window);
+    
     // Apply the general update pattern to the links.
     const link = this.link.data(this.props.links, d => d.id);
     link.exit().remove();
@@ -41,14 +42,11 @@ class Graph extends React.Component {
     node.exit().remove();
     node.enter().append("circle").attr("fill", "red").attr("r", 50).merge(node);
 
-
     // Update and restart the simulation.
     this.simulation.nodes(this.props.nodes)
     .force("center_force", d3.forceCenter(this.width / 2, this.height / 2))
-    .force("charge_force", d3.forceManyBody().strength(-100))
-    .force("link", d3.forceLink(this.props.links)
-      .id(d => d.id)
-      .distance(300));
+    .force("charge_force", d3.forceManyBody().strength(-1000).distanceMin(50))
+    .force("link", d3.forceLink(this.props.links).id(d => d.id).distance(300));
     this.simulation.alpha(1).restart();
   }
 
@@ -58,7 +56,7 @@ class Graph extends React.Component {
     console.log('GRAPH', this.graph.size());
     this.simulation = d3.forceSimulation(this.props.nodes)
     .force("center_force", d3.forceCenter(this.width / 2, this.height / 2))
-    .force("charge_force", d3.forceManyBody().strength(-100))
+    .force("charge_force", d3.forceManyBody().strength(-1000).distanceMin(50))
     .force("link", d3.forceLink(this.props.links)
       .id(d => d.id)
       .distance(300));
