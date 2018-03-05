@@ -1,6 +1,5 @@
 class Api::LinksController < ApplicationController
   def create
-    debugger
     @link = Link.new({source_id: params[:source_id], target_id: params[:target_id]})
     if @link.save
       @node = @link.target

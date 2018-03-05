@@ -42,6 +42,7 @@ class CanvasShow extends React.Component {
 
   handleForm(node) {
     this.unmountEditor();
+
     if (typeof(node) === 'number') {
       this.props.deleteNode(node);
     } else if (node.id) {
@@ -49,6 +50,7 @@ class CanvasShow extends React.Component {
     } else {
       this.props.createNode(node);
     }
+    //make sure this is async
     this.props.fetchCanvas(this.props.canvas.id);
   }
 

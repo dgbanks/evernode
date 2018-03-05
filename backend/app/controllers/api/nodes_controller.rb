@@ -1,6 +1,5 @@
 class Api::NodesController < ApplicationController
   def create
-    debugger
     @node = Node.new(node_params)
     if @node.save
       if params[:node][:source_id]
