@@ -36,8 +36,9 @@ class Editor extends React.Component {
   }
 
   handleSave() {
+    console.log('handleSave');
     if (this.state.node.title) {
-      this.setState({ readOnly: true });
+      // this.setState({ readOnly: true });
       this.props.handleForm(this.state.node);
     }
   }

@@ -30,24 +30,62 @@ class Graph extends React.Component {
     this.restart();
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!nextProps.selected) {
+      return true;
+    }
+    return false;
+  }
+
   restart() {
     console.log('graph.restart', window);
 
-    // Apply the general update pattern to the links.
-    const link = this.link.data(this.props.links, d => d.id);
-    link.exit().remove();
-    link.enter().append("line").attr("stroke-width", 2).merge(link);
 
     // Apply the general update pattern to the nodes.
     const node = this.node.data(this.props.nodes, d => d.id);
     node.exit().remove();
-    node.enter().append("circle").attr("fill", "red").attr("r", 50).merge(node);
+    node.enter().append("circle")
+      .attr("r", 50)
+      .attr("fill", "red")
+      .attr("id", d => `node${d.id}`)
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y)
+      .text(d => d.title)
+      .on("click", (e) => {
+        if (!this.props.selected || (this.props.selected.id !== e.id)) {
+          d3.select(`#node${e.id}`).classed("selected", true);
+        }
+        this.props.handleNodeClick(e);
+      })
+      .merge(node);
+
+      // Apply the general update pattern to the links.
+      const link = this.link.data(this.props.links, d => {console.log('d', d); d.id;});
+      link.exit().remove();
+      link.enter().append("line")
+      .attr("stroke-width", 2)
+      .attr("stroke", "yellow")
+      .merge(link);
 
     // Update and restart the simulation.
     this.simulation.nodes(this.props.nodes)
     .force("center_force", d3.forceCenter(this.width / 2, this.height / 2))
     .force("charge_force", d3.forceManyBody().strength(-1000).distanceMin(50))
-    .force("link", d3.forceLink(this.props.links).id(d => d.id).distance(300));
+    .force("link", d3.forceLink(this.props.links)
+      .id(d => d.id)
+      .distance(300));
+
+    this.simulation.on("tick", () => {
+      this.node
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y);
+
+      this.link
+      .attr("x1", d => d.source.x)
+      .attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x)
+      .attr("y2", d => d.target.y);
+    });
     this.simulation.alpha(1).restart();
   }
 

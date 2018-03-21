@@ -41,20 +41,25 @@ class CanvasShow extends React.Component {
   }
 
   handleForm(node) {
-    this.unmountEditor();
+    console.log('handleForm');
 
     if (typeof(node) === 'number') {
-      this.props.deleteNode(node);
+      this.props.deleteNode(node)
+        .then(() => this.props.fetchCanvas(this.props.canvas.id))
+        .then(() => this.unmountEditor());
     } else if (node.id) {
-      this.props.editNode(node);
+      this.props.editNode(node)
+        .then(() => this.props.fetchCanvas(this.props.canvas.id))
+        .then(() => this.unmountEditor());
     } else {
-      this.props.createNode(node);
+      this.props.createNode(node)
+        .then(() => this.props.fetchCanvas(this.props.canvas.id))
+        .then(() => this.unmountEditor());
     }
-    //make sure this is async
-    this.props.fetchCanvas(this.props.canvas.id);
   }
 
   unmountEditor() {
+    console.log('unmountEditor');
     this.setState({ selected: null, readOnly: true });
   }
 
