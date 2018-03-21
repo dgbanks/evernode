@@ -2,6 +2,9 @@ class Api::NodesController < ApplicationController
   def create
     @node = Node.new(node_params)
     if @node.save
+      if params[:node][:source_id]
+        Link.create({source_id: params[:node][:source_id], target_id: @node.id})
+      end
       render :show
     else
       render json: @node.errors.full_messages, status: 422
@@ -19,7 +22,7 @@ class Api::NodesController < ApplicationController
   end
 
   def update
-    @node = Node.where(id: params[:id])
+    @node = Node.find(params[:id])
     if @node.update_attributes(node_params)
       render :show
     else
@@ -28,7 +31,7 @@ class Api::NodesController < ApplicationController
   end
 
   def destroy
-    @node = Node.where(id: params[:id])
+    @node = Node.find(params[:id])
     @node.destroy
     render :show
   end
@@ -36,6 +39,6 @@ class Api::NodesController < ApplicationController
   private
 
   def node_params
-    params.require(:node).permit(:title, :body, :owner_id)
+    params.require(:node).permit(:title, :body, :canvas_id)
   end
 end

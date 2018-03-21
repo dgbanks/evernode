@@ -1,24 +1,28 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as d3 from 'd3';
-
+import Graph from './graph';
+import Editor from './editor';
 import { fetchCanvas } from '../../actions/canvas_actions';
+import { createNode, editNode, deleteNode } from '../../actions/node_actions';
 
 class CanvasShow extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props, d3);
+    this.state = { selected: null };
+    this.displayHeader = this.displayHeader.bind(this);
+    this.unmountEditor = this.unmountEditor.bind(this);
+    this.handleNodeClick = this.handleNodeClick.bind(this);
+    this.handleForm = this.handleForm.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
+    console.log('CanvasShow.componentDidMount');
     this.props.fetchCanvas(this.props.match.params.canvasId);
-    d3.select('svg').append("p").text("something");
-
   }
 
-  navbar() {
-    return(
+  displayHeader() {
+    return (
       <div className='canvas-nav'>
         <div className='x' onClick={() => this.props.history.goBack()}>
           <i className="fas fa-times"></i>
@@ -30,54 +34,88 @@ class CanvasShow extends React.Component {
     );
   }
 
-  tick(e) {
-    node.attr('cx', function(d) { return d.x; })
-      .attr('cy', function(d) { return d.y; })
-      .call(force.drag);
+  handleNodeClick(e) {
+    console.log(e);
+    // problem: multiple nodes with 'selected' class!
+    this.setState({ selected: this.state.selected === e ? null : e });
+  }
 
-    link.attr('x1', function(d) { return d.source.x; })
-      .attr('y1', function(d) { return d.source.y; })
-      .attr('x2', function(d) { return d.target.x; })
-      .attr('y2', function(d) { return d.target.y; })
+  handleForm(node) {
+    console.log('handleForm');
+
+    if (typeof(node) === 'number') {
+      this.props.deleteNode(node)
+        .then(() => this.props.fetchCanvas(this.props.canvas.id))
+        .then(() => this.unmountEditor());
+    } else if (node.id) {
+      this.props.editNode(node)
+        .then(() => this.props.fetchCanvas(this.props.canvas.id))
+        .then(() => this.unmountEditor());
+    } else {
+      this.props.createNode(node)
+        .then(() => this.props.fetchCanvas(this.props.canvas.id))
+        .then(() => this.unmountEditor());
+    }
+  }
+
+  unmountEditor() {
+    console.log('unmountEditor');
+    this.setState({ selected: null, readOnly: true });
   }
 
   render() {
+    let height = '100%', width = '100%';
+    if (this.state.selected) {
+      width = '60%';
+    }
+
     if (!this.props.canvas) {
       return (
-        <div style={{backgroundColor:'black'}} className='spinner-div'>
-          <i className="fas fa-spinner fa-pulse"></i>
+        <div style={{backgroundColor:'black'}}></div>
+      );
+    } else {
+      return (
+        <div className='canvas'>
+          <div className='canvas-flex' style={{
+            height: height,
+            width: width,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
+          {this.displayHeader()}
+          <Graph
+            nodes={this.props.canvas.nodes}
+            links={this.props.canvas.links}
+            selected={this.state.selected}
+            displayHeader={this.displayHeader}
+            handleNodeClick={this.handleNodeClick}
+          />
+          </div>
+          {
+            this.state.selected ?
+            <div style={{
+              display:'flex', alignItems:'center', width: '40%'
+            }}>
+              <div style={{display:'flex', flexDirection:'column'}}>
+                <div style={{
+                  backgroundColor:'white', height: '50px', width:'25px'
+                }} onClick={this.unmountEditor}>
+                  <i style={{fontSize:'50px'}} className="fas fa-angle-right"></i>
+                </div>
+              </div>
+              <Editor
+                node={this.state.selected}
+                canvasId={this.props.canvas.id}
+                unmount={this.unmountEditor}
+                handleForm={this.handleForm}
+              />
+            </div> :
+            <div/>
+          }
         </div>
       );
     }
-
-    const svg = d3.select("body")
-      .append("svg")
-      .attr('width', 500)
-      .attr('height', 500);
-
-    const force = d3.layout.force()
-      .size([500, 500])
-      .nodes(d3.values(this.props.nodes))
-      .links(this.props.links)
-      .on('tick', this.tick)
-      .linkDistance(300)
-      .start();
-
-    const link = svg.selectAll('.link').data(this.props.links).enter().append('line').attr('class', 'link');
-
-    const node = svg.selectAll('.node').data(force.nodes()).enter().append('circle').attr('class', 'node').attr('r', 5);
-
-
-
-    // return (
-    //   <div className='canvas' id='canvas'>
-    //     {this.navbar()}
-    //     <svg className='svg' width='500' height='500'>
-    //       <circle r='50'></circle>
-    //     </svg>
-    //     <p>something</p>
-    //   </div>
-    // );
   }
 }
 
@@ -86,7 +124,10 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchCanvas: canvasId => dispatch(fetchCanvas(canvasId))
+  fetchCanvas: canvasId => dispatch(fetchCanvas(canvasId)),
+  createNode: node => dispatch(createNode(node)),
+  editNode: node => dispatch(editNode(node)),
+  deleteNode: nodeId => dispatch(deleteNode(nodeId))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CanvasShow));

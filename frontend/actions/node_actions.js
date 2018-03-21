@@ -1,9 +1,11 @@
 import * as NodeUtil from '../utils/node_api_util';
+import { receiveLink, receiveLinkErrors } from './link_actions';
 
 export const RECEIVE_NODE = 'RECEIVE_NODE';
 export const RECEIVE_CANVAS_NODES = 'RECEIVE_CANVAS_NODES';
 export const RECEIVE_NODE_ERRORS = 'RECEIVE_NODE_ERRORS';
 export const REMOVE_NODE = 'REMOVE_NODE';
+
 
 export const receiveNode = node => ({
   type: RECEIVE_NODE,
@@ -27,7 +29,11 @@ export const removeNode = node => ({
 
 export const createNode = node => dispatch => (
   NodeUtil.postNode(node)
-    .then(newNode => dispatch(receiveNode(newNode)))
+    .then(newNode => {
+      console.log('newNode', newNode.data.links_to[0]);
+      dispatch(receiveNode(newNode));
+      dispatch(receiveLink(newNode.data.links_to[0]));
+    })
     .catch(errors => dispatch(receiveNodeErrors(errors)))
 );
 

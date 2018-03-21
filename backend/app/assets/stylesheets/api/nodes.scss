@@ -1,3 +1,112 @@
 // Place all the styles related to the api/nodes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  border: 1px solid yellow;
+  background-color: #d0d7e2;
+}
+
+.rq-div {
+  height: 80%;
+  width: 95%;
+  border: 1px solid #70b2d8;
+}
+
+.quill {
+  height: 100%;
+}
+
+.ql-toolbar {
+  height: 5%;
+}
+
+.ql-container {
+  height: 95%;
+  background-color: white;
+  border: 1px solid red;
+}
+
+div.ql-container.ql-snow {
+  height: 95%;
+}
+
+.ql-editor  {
+  border: 1px solid purple;
+}
+
+.editor-header {
+  height: 10%;
+  width: 100%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editor-header div {
+  height: 40%;
+  width: 95%;
+  border: 1px solid orange;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editor-header input {
+  width: 85%;
+  height: 100%;
+  font-size: 20px;
+  padding: 0px 10px;
+}
+
+.editor-header div div {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: auto;
+  font-size: 40px;
+}
+
+.editor-header div div:hover {
+  cursor: pointer;
+  color: #70b2d8;
+}
+
+.editor-footer {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.editor-footer button {
+  height: 50%;
+  width: 35%;
+  margin-left: 10%;
+  color: white;
+  font-size: 20px;
+  font-family: "Trebuchet MS", sans-serif;
+}
+
+.editor-footer button:first-child {
+  background-color: #70b2d8;
+}
+
+.editor-footer button:last-child {
+  background-color: #f44262;
+}
+
+button:first-child:hover {
+  background-color: darken(#70b2d8, 10);
+}
+
+button:last-child:hover {
+  background-color: darken(#f44262, 10);
+}
