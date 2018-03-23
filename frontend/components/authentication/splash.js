@@ -10,7 +10,6 @@ import { authenticateUser, logout } from '../../actions/session_actions';
 
 class Splash extends React.Component {
   constructor(props) {
-    console.log('ONLY ONCE');
     super(props);
     this.auth = new Auth();
     this.state = { success: false };
