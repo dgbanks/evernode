@@ -1,10 +1,8 @@
 import auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth0_config';
-import createHistory from 'history/createBrowserHistory';
 
 export default class Auth {
   constructor() {
-    this.history = createHistory();
     this.auth0 = new auth0.WebAuth({
       domain: AUTH_CONFIG.domain,
       clientID: AUTH_CONFIG.clientId,
@@ -28,7 +26,6 @@ export default class Auth {
         sessionStorage.setItem('access_token', authResult.accessToken);
         fn();
       } else if (err) {
-        // this.history.replace('/');
         alert(`Error: ${err.error}. Check the console for further details.`);
       }
     });

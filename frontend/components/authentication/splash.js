@@ -2,13 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import Auth from './auth';
+
 import Callback from './callback';
 import Dashboard from './dashboard';
 import { authenticateUser, logout } from '../../actions/session_actions';
 
 class Splash extends React.Component {
   constructor(props) {
+    console.log('ONLY ONCE');
     super(props);
+    this.auth = new Auth();
     this.state = { success: false };
 
     this.handleLogin = this.handleLogin.bind(this);
@@ -18,7 +22,7 @@ class Splash extends React.Component {
 
   componentWillMount() {
     if (/access_token|id_token|error/.test(location.hash)) {
-      this.props.auth.handleAuthentication(this.successfulAuth);
+      this.auth.handleAuthentication(this.successfulAuth);
       this.props.history.replace('/');
     }
   }
@@ -36,7 +40,7 @@ class Splash extends React.Component {
   }
 
   handleLogin() {
-    this.props.auth.login();
+    this.auth.login();
   }
 
   render() {
@@ -64,7 +68,7 @@ class Splash extends React.Component {
       if (this.state.success) {
         return (
           <Callback
-            auth={this.props.auth}
+            auth={this.auth}
             authenticateUser={this.props.authenticateUser}
           />
         );
