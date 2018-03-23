@@ -1,10 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
 import CanvasIndex from '../canvas/canvas_index';
-import { logout } from '../../actions/session_actions';
 
 class Dashboard extends React.Component {
+  componentWillMount() {
+    this.props.successfulAuth();
+  }
+
   render() {
     return (
       <div className='dash-main'>
@@ -25,12 +26,4 @@ class Dashboard extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  currentUser: ownProps.currentUser
-});
-
-const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(logout())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default Dashboard;
