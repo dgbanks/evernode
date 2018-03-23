@@ -1,15 +1,33 @@
 import React from 'react';
-import history from './history';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
+import Auth from './auth';
+
+import Callback from './callback';
 import Dashboard from './dashboard';
+import { authenticateUser, logout } from '../../actions/session_actions';
 
 class Splash extends React.Component {
   constructor(props) {
     super(props);
+    this.auth = new Auth();
+    this.state = { success: false };
 
     this.handleLogin = this.handleLogin.bind(this);
     this.transitionColor = this.transitionColor.bind(this);
+    this.successfulAuth = this.successfulAuth.bind(this);
+  }
+
+  componentWillMount() {
+    if (/access_token|id_token|error/.test(location.hash)) {
+      this.auth.handleAuthentication(this.successfulAuth);
+      this.props.history.replace('/');
+    }
+  }
+
+  successfulAuth() {
+    this.setState({ success: this.props.currentUser ? false : true });
   }
 
   transitionColor() {
@@ -21,7 +39,7 @@ class Splash extends React.Component {
   }
 
   handleLogin() {
-    this.props.auth.login();
+    this.auth.login();
   }
 
   render() {
@@ -40,19 +58,31 @@ class Splash extends React.Component {
 
     if (this.props.currentUser) {
       return (
-        <Dashboard currentUser={this.props.currentUser}/>
+        <Dashboard
+          logout={this.props.logout}
+          successfulAuth={this.successfulAuth}
+          currentUser={this.props.currentUser}/>
       );
     } else {
-      return (
-        <div style={divStyles}>
-        <div style={{display:'flex', flexDirection:'column', alignItems: 'center'}}>
-        <h1 className='splashText'>Welcome to EVERNODE</h1>
-        <a className='splashButton' onClick={() => this.handleLogin()}>
-        Sign in with Google
-        </a>
-        </div>
-        </div>
-      );
+      if (this.state.success) {
+        return (
+          <Callback
+            auth={this.auth}
+            authenticateUser={this.props.authenticateUser}
+          />
+        );
+      } else {
+        return (
+          <div style={divStyles}>
+            <div style={{display:'flex', flexDirection:'column', alignItems: 'center'}}>
+              <h1 className='splashText'>Welcome to EVERNODE</h1>
+              <a className='splashButton' onClick={() => this.handleLogin()}>
+                Sign in with Google
+              </a>
+            </div>
+          </div>
+        );
+      }
     }
   }
 }
@@ -61,4 +91,9 @@ const mapStateToProps = state => ({
   currentUser: state.ui.session.currentUser
 });
 
-export default connect(mapStateToProps, null)(Splash);
+const mapDispatchToProps = dispatch => ({
+  authenticateUser: user => dispatch(authenticateUser(user)),
+  logout: () => dispatch(logout())
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Splash));

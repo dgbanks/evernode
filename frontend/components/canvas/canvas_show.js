@@ -16,7 +16,7 @@ class CanvasShow extends React.Component {
     this.handleForm = this.handleForm.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     console.log('CanvasShow.componentDidMount');
     this.props.fetchCanvas(this.props.match.params.canvasId);
   }
