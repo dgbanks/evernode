@@ -19,12 +19,12 @@ class Splash extends React.Component {
   componentWillMount() {
     if (/access_token|id_token|error/.test(location.hash)) {
       this.props.auth.handleAuthentication(this.successfulAuth);
-      this.props.history.replace('/callback');
+      this.props.history.replace('/');
     }
   }
 
   successfulAuth() {
-    this.setState({success: !this.state.success});
+    this.setState({ success: this.props.currentUser ? false : true });
   }
 
   transitionColor() {
@@ -67,17 +67,16 @@ class Splash extends React.Component {
             auth={this.props.auth}
             authenticateUser={this.props.authenticateUser}
           />
-
         );
       } else {
         return (
           <div style={divStyles}>
-          <div style={{display:'flex', flexDirection:'column', alignItems: 'center'}}>
-          <h1 className='splashText'>Welcome to EVERNODE</h1>
-          <a className='splashButton' onClick={() => this.handleLogin()}>
-          Sign in with Google
-          </a>
-          </div>
+            <div style={{display:'flex', flexDirection:'column', alignItems: 'center'}}>
+              <h1 className='splashText'>Welcome to EVERNODE</h1>
+              <a className='splashButton' onClick={() => this.handleLogin()}>
+                Sign in with Google
+              </a>
+            </div>
           </div>
         );
       }
@@ -94,4 +93,4 @@ const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Splash);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Splash));

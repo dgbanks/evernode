@@ -9,7 +9,7 @@ const auth = new Auth();
 const App = () => (
   <Switch>
       <Route path='/canvases/:canvasId' component={CanvasShow} />
-      <Route path='/' render={(props) => <Splash auth={auth} {...props} />} />
+      <Route path='/' render={() => <Splash auth={auth} />} />
   </Switch>
 );
 
